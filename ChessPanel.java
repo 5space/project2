@@ -153,30 +153,30 @@ public class ChessPanel extends JPanel {
                 if (model.pieceAt(r, c).player() == Player.WHITE) {
                     if (model.pieceAt(r, c).type().equals("Pawn"))
                         board[r][c].setIcon(wPawn);
-                    if (model.pieceAt(r, c).type().equals("Rook"))
+                    else if (model.pieceAt(r, c).type().equals("Rook"))
                         board[r][c].setIcon(wRook);
-                    if (model.pieceAt(r, c).type().equals("Knight"))
+                    else if (model.pieceAt(r, c).type().equals("Knight"))
                         board[r][c].setIcon(wKnight);
-                    if (model.pieceAt(r, c).type().equals("Bishop"))
+                    else if (model.pieceAt(r, c).type().equals("Bishop"))
                         board[r][c].setIcon(wBishop);
-                    if (model.pieceAt(r, c).type().equals("Queen"))
+                    else if (model.pieceAt(r, c).type().equals("Queen"))
                         board[r][c].setIcon(wQueen);
-                    if (model.pieceAt(r, c).type().equals("King"))
+                    else if (model.pieceAt(r, c).type().equals("King"))
                         board[r][c].setIcon(wKing);
+                }
                 else if (model.pieceAt(r, c).player() == Player.BLACK) {
                     if (model.pieceAt(r, c).type().equals("Pawn"))
                         board[r][c].setIcon(bPawn);
-                    if (model.pieceAt(r, c).type().equals("Rook"))
+                    else if (model.pieceAt(r, c).type().equals("Rook"))
                         board[r][c].setIcon(bRook);
-                    if (model.pieceAt(r, c).type().equals("Knight"))
+                    else if (model.pieceAt(r, c).type().equals("Knight"))
                         board[r][c].setIcon(bKnight);
-                    if (model.pieceAt(r, c).type().equals("Bishop"))
+                    else if (model.pieceAt(r, c).type().equals("Bishop"))
                         board[r][c].setIcon(bBishop);
-                    if (model.pieceAt(r, c).type().equals("Queen"))
+                    else if (model.pieceAt(r, c).type().equals("Queen"))
                         board[r][c].setIcon(bQueen);
-                    if (model.pieceAt(r, c).type().equals("King"))
+                    else if (model.pieceAt(r, c).type().equals("King"))
                         board[r][c].setIcon(bKing);
-                    }
                 }
         }
         repaint();
@@ -188,7 +188,7 @@ public class ChessPanel extends JPanel {
             for (int r = 0; r < model.numRows(); r++)
                 for (int c = 0; c < model.numColumns(); c++)
                     if (board[r][c] == event.getSource())
-                        if (firstTurnFlag == true) {
+                        if (firstTurnFlag) {
                             fromRow = r;
                             fromCol = c;
                             firstTurnFlag = false;
@@ -197,7 +197,7 @@ public class ChessPanel extends JPanel {
                             toCol = c;
                             firstTurnFlag = true;
                             Move m = new Move(fromRow, fromCol, toRow, toCol);
-                            if ((model.isValidMove(m)) == true) {
+                            if (model.isValidMove(m)) {
                                 model.move(m);
                                 displayBoard();
                             }

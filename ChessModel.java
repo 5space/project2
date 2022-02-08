@@ -106,4 +106,23 @@ public class ChessModel implements IChessModel {
 		 */
 
 		}
+
+	public static void main(String[] args) {
+		ChessModel model = new ChessModel();
+		model.display();
+
+	}
+
+	public void display() {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (board[i][j] == null) {
+					System.out.print("null\t");
+				} else {
+					System.out.print(board[i][j].type() + "\t");
+				}
+			}
+			System.out.println();
+		}
+	}
 }
