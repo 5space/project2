@@ -18,6 +18,23 @@ public class ChessModel implements IChessModel {
         board[7][5] = new Bishop(Player.WHITE);
         board[7][6] = new Knight (Player.WHITE);
         board[7][7] = new Rook(Player.WHITE);
+		for (int i = 0; i < 8; i++) {
+			board[6][i] = new Pawn(Player.WHITE);
+		}
+
+		board[0][0] = new Rook(Player.BLACK);
+		board[0][1] = new Knight(Player.BLACK);
+		board[0][2] = new Bishop(Player.BLACK);
+		board[0][3] = new Queen(Player.BLACK);
+		board[0][4] = new King(Player.BLACK);
+		board[0][5] = new Bishop(Player.BLACK);
+		board[0][6] = new Knight (Player.BLACK);
+		board[0][7] = new Rook(Player.BLACK);
+		for (int i = 0; i < 8; i++) {
+			board[1][i] = new Pawn(Player.BLACK);
+		}
+
+
 	}
 
 	public boolean isComplete() {
@@ -29,7 +46,7 @@ public class ChessModel implements IChessModel {
 		boolean valid = false;
 
 		if (board[move.fromRow][move.fromColumn] != null)
-			if (board[move.fromRow][move.fromColumn].isValidMove(move, board) == true)
+			if (board[move.fromRow][move.fromColumn].isValidMove(move, board))
                 return true;
 
 		return valid;

@@ -24,7 +24,7 @@ public interface IChessModel {
 	 * Moves the piece from location {@code [move.fromRow, move.fromColumn]} to location {@code [move.fromRow,
 	 * move.fromColumn]}.
 	 *
-	 * @param move a {@link W18project3.Move} object describing the move to be made.
+	 * @param move a {@link project2.Move} object describing the move to be made.
 	 * @throws IndexOutOfBoundsException if either {@code [move.fromRow, move.fromColumn]} or {@code [move.toRow,
 	 *                                   move.toColumn]} don't represent valid locations on the board.
 	 */
