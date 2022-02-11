@@ -2,6 +2,8 @@ package project2;
 
 public class Rook extends ChessPiece {
 
+	boolean hasMoved = false;
+
 	public Rook(Player player) {
 		super(player);
 	}
@@ -10,13 +12,12 @@ public class Rook extends ChessPiece {
 		return "Rook";
 	}
 
+	public boolean hasMoved() {
+		return hasMoved;
+	}
+
 	// determines if the move is valid for a rook piece
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
-		// If the move is the same spot, it is not valid
-		if (move.fromColumn == move.toColumn && move.fromRow == move.toRow) {
-			return false;
-		}
-
 		// If the move is in a different column AND row, it is not valid
 		if (move.fromColumn != move.toColumn && move.fromRow != move.toRow) {
 			return false;
@@ -68,7 +69,8 @@ public class Rook extends ChessPiece {
 				}
 			}
 		}
-		// If there's no piece in the way, and the destination isn't the same player's
-		return board[move.toRow][move.toColumn] == null || board[move.toRow][move.toColumn].player() != player();
+		// If there's no piece in the way
+		hasMoved = true;
+		return true;
 	}
 }

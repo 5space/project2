@@ -15,13 +15,10 @@ public abstract class ChessPiece implements IChessPiece {
 	}
 
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
-		boolean valid = false;
-
-		//  THIS IS A START... More coding needed
-		
-		if (((move.fromRow == move.toRow) && (move.fromColumn == move.toColumn)) == false)
-			return valid;
-
-		return false;
+		return (0 <= move.fromColumn && move.fromColumn < 8 && 0 <= move.fromRow && move.fromRow < 8) &&
+				(0 <= move.toColumn && move.toColumn < 8 && 0 <= move.toRow && move.toRow < 8) &&
+				(move.fromColumn != move.toColumn || move.fromRow != move.toRow) &&
+				(board[move.fromRow][move.fromColumn] == this) &&
+				(board[move.toRow][move.toColumn] == null || board[move.toRow][move.toColumn].player() != player());
 	}
 }
