@@ -11,11 +11,14 @@ public class Knight extends ChessPiece {
 	}
 
 	public boolean isValidMove(Move move, IChessPiece[][] board){
+		if (!super.isValidMove(move, board)) {
+			return false;
+		}
 
-		boolean valid = true;
-        // More code is needed
-		return valid;
-		
+		return (Math.abs(move.fromRow - move.toRow) == 2 && Math.abs(move.fromColumn - move.toColumn) == 1) ||
+				(Math.abs(move.fromRow - move.toRow) == 1 && Math.abs(move.fromColumn - move.toColumn) == 2);
+
+
 	}
 
 }
