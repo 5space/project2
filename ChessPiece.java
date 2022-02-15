@@ -18,7 +18,7 @@ public abstract class ChessPiece implements IChessPiece {
 		return (0 <= move.fromColumn && move.fromColumn < 8 && 0 <= move.fromRow && move.fromRow < 8) &&
 				(0 <= move.toColumn && move.toColumn < 8 && 0 <= move.toRow && move.toRow < 8) &&
 				(move.fromColumn != move.toColumn || move.fromRow != move.toRow) &&
-				(board[move.fromRow][move.fromColumn] == this) &&
+				//(board[move.fromRow][move.fromColumn] == this) &&
 				(board[move.toRow][move.toColumn] == null || board[move.toRow][move.toColumn].player() != player());
 	}
 }
