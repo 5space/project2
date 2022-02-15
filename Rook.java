@@ -18,6 +18,10 @@ public class Rook extends ChessPiece {
 
 	// determines if the move is valid for a rook piece
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
+		if (!super.isValidMove(move, board)) {
+			return false;
+		}
+
 		// If the move is in a different column AND row, it is not valid
 		if (move.fromColumn != move.toColumn && move.fromRow != move.toRow) {
 			return false;
