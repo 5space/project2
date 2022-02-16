@@ -28,9 +28,11 @@ public class ChessPanel extends JPanel {
     private int toRow;
     private int fromCol;
     private int toCol;
-    // declare other intance variables as needed
+    // declare other instance variables as needed
 
+    /** when user click a button an action will be executed*/
     private listener listener;
+
 
     public ChessPanel() {
         model = new ChessModel();
@@ -182,7 +184,7 @@ public class ChessPanel extends JPanel {
         repaint();
     }
 
-    // inner class that represents action listener for buttons
+    /** inner class that represents action listener for buttons*/
     private class listener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             for (int r = 0; r < model.numRows(); r++)

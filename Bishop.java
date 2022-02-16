@@ -9,13 +9,23 @@ public class Bishop extends ChessPiece {
 	public String type() {
 		return "Bishop";
 	}
-	
+
+	/**
+	 * Check if selected move is valid according to chess rules
+	 * @param move
+	 * @param board
+	 *
+	 * @return true/false
+	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 		if (!super.isValidMove(move, board)) {
 			return false;
 		}
 
-		// Checks that the move is diagonal
+		/** Checks that the move is diagonal
+		 * As bishop movement as a square diagonal conjecture
+		 * Check if row and column has same length -> valid
+		 */
 		if (Math.abs(move.toRow - move.fromRow) != Math.abs(move.toColumn - move.fromColumn)) {
 			return false;
 		}
@@ -53,7 +63,10 @@ public class Bishop extends ChessPiece {
 			}
 		}
 
-		// If there's no piece in the way
+		/**
+		 * If there's no piece in the way
+		 * If it is not player piece on the (toRow,toColumn) -> take down
+		 * If*/
 		return true;
 
 	}

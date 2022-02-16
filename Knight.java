@@ -2,6 +2,7 @@ package project2;
 
 public class Knight extends ChessPiece {
 
+	/** Constructor*/
 	public Knight(Player player) {
 		super(player);
 	}
@@ -15,10 +16,10 @@ public class Knight extends ChessPiece {
 			return false;
 		}
 
-		return (Math.abs(move.fromRow - move.toRow) == 2 && Math.abs(move.fromColumn - move.toColumn) == 1) ||
+		return (
+				Math.abs(move.fromRow - move.toRow) == 2 &&
+				Math.abs(move.fromColumn - move.toColumn) == 1) ||
 				(Math.abs(move.fromRow - move.toRow) == 1 && Math.abs(move.fromColumn - move.toColumn) == 2);
-
-
 	}
 
 }

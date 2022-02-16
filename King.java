@@ -32,11 +32,11 @@ public class King extends ChessPiece {
 		if (Math.abs(move.toRow - move.fromRow) <= 1 && Math.abs(move.toColumn - move.fromColumn) <= 1) {
 			return true;
 		} else {
-			// Checking for castling
+			/** Checking for castling of white player */
 			if (player() == Player.WHITE) {
 				// Checks the king has not moved and is still in the starting position
 				if (move.fromRow == 7 && move.fromColumn == 4 && !hasMoved) {
-					// Checking if the left castling is clear and the rook is still in the starting position and has not moved
+					// Checking if left castling is clear and rook is still in the starting position and has not moved
 					if (move.toRow == 7 && move.toColumn == 2 && board[move.toRow][move.toColumn] == null &&
 							board[move.toRow][move.toColumn + 1] == null && board[7][move.toColumn - 1] == null &&
 							board[7][0] != null && board[7][0].type().equals("Rook") &&
@@ -56,6 +56,7 @@ public class King extends ChessPiece {
 					}
 				}
 			}
+			/** Checking for castling of black player */
 			if (player() == Player.BLACK) {
 				if (move.fromRow == 0 && move.fromColumn == 4 && !hasMoved) {
 					// Checking for the left castling
