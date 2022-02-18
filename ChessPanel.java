@@ -202,6 +202,13 @@ public class ChessPanel extends JPanel {
                             if (model.isValidMove(m)) {
                                 model.move(m);
                                 displayBoard();
+                                for (int row = 0; row < model.numRows(); row++) {
+                                    for (int col = 0; col < model.numColumns(); col++) {
+                                        if (model.pieceAt(row, col) != null && model.pieceAt(row, col).type().equals("Pawn")) {
+                                            ((Pawn) model.pieceAt(row, col)).decEnPassantTimer();
+                                        }
+                                    }
+                                }
                             }
                         }
         }

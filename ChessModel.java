@@ -33,8 +33,6 @@ public class ChessModel implements IChessModel {
 		for (int i = 0; i < 8; i++) {
 			board[1][i] = new Pawn(Player.BLACK);
 		}
-
-
 	}
 
 	public boolean isComplete() {
@@ -53,7 +51,7 @@ public class ChessModel implements IChessModel {
 	}
 
 	public void move(Move move) {
-		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
+		board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
 		board[move.fromRow][move.fromColumn] = null;
 	}
 
@@ -88,23 +86,19 @@ public class ChessModel implements IChessModel {
 	}
 
 	public void AI() {
-		/** Write a simple AI set of rules in the following order.
+		/* Write a simple AI set of rules in the following order.
 		 * a. Check to see if you are in check.
 		 * 		i. If so, get out of check by moving the king or placing a piece to block the check 
-		 */
-		if(true){
-
-		}
-
-		 /* b. Attempt to put opponent into check (or checkmate).
+		 *
+		 * b. Attempt to put opponent into check (or checkmate).
 		 * 		i. Attempt to put opponent into check without losing your piece
 		 *		ii. Perhaps you have won the game. 
 		 *
-		 *c. Determine if any of your pieces are in danger, 
+		 * c. Determine if any of your pieces are in danger,
 		 *		i. Move them if you can. 
 		 *		ii. Attempt to protect that piece. 
-		 */
-		 /*d. Move a piece (pawns first) forward toward opponent king
+		 *
+		 * d. Move a piece (pawns first) forward toward opponent king
 		 *		i. check to see if that piece is in danger of being removed, if so, move a different piece.
 		 */
 

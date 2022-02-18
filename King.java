@@ -21,18 +21,11 @@ public class King extends ChessPiece {
 			return false;
 		}
 
-		// Checks if the move is at most one square away
-		//			if (player() == Player.WHITE) {
-		//				if (move.toRow == 0 && move.toColumn == 4) {
-		//					if (board[move.toRow][move.toColumn] == null) {
-		//
-		//					}
-		//				}
-		//			}
 		if (Math.abs(move.toRow - move.fromRow) <= 1 && Math.abs(move.toColumn - move.fromColumn) <= 1) {
+			hasMoved = true;
 			return true;
 		} else {
-			/** Checking for castling of white player */
+			// Checking for castling
 			if (player() == Player.WHITE) {
 				// Checks the king has not moved and is still in the starting position
 				if (move.fromRow == 7 && move.fromColumn == 4 && !hasMoved) {
@@ -43,6 +36,7 @@ public class King extends ChessPiece {
 							board[7][0].player() == Player.WHITE && !((Rook) board[7][0]).hasMoved()) {
 						board[7][3] = board[7][0];
 						board[7][0] = null;
+						hasMoved = true;
 						return true;
 					}
 					// Checking for the right castling
@@ -52,6 +46,7 @@ public class King extends ChessPiece {
 							!((Rook) board[7][7]).hasMoved()) {
 						board[7][5] = board[7][7];
 						board[7][7] = null;
+						hasMoved = true;
 						return true;
 					}
 				}
