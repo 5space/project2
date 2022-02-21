@@ -144,9 +144,16 @@ public class ChessPanel extends JPanel {
     }
 
     // method that updates the board
-    private void displayBoard() {
+    private void displayBoard(boolean pieceSelected, int selRow, int selCol) {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
+                setBackGroundColor(r, c);
+                if (pieceSelected) {
+                    Move m = new Move(selRow, selCol, r, c);
+                    if (model.isValidMove(m)) {
+                        board[r][c].setBackground(Color.GRAY);
+                    }
+                }
                 if (model.pieceAt(r, c) == null)
                     board[r][c].setIcon(null);
                 else if (model.pieceAt(r, c).player() == Player.WHITE) {
@@ -191,6 +198,7 @@ public class ChessPanel extends JPanel {
                             fromRow = r;
                             fromCol = c;
                             firstTurnFlag = false;
+                            displayBoard(true, r, c);
                         } else {
                             toRow = r;
                             toCol = c;
@@ -198,7 +206,6 @@ public class ChessPanel extends JPanel {
                             Move m = new Move(fromRow, fromCol, toRow, toCol);
                             if (model.isValidMove(m)) {
                                 model.move(m);
-                                displayBoard();
 
                                 // En Passant reset
                                 for (int row = 0; row < model.numRows(); row++) {
@@ -209,6 +216,8 @@ public class ChessPanel extends JPanel {
                                     }
                                 }
                             }
+                            // After the 2nd click (move), even if move failed
+                            displayBoard(false, 0, 0);
                         }
                     }
                 }
