@@ -15,14 +15,17 @@ public class King extends ChessPiece {
 	public boolean hasMoved() {
 		return hasMoved;
 	}
-	
+
+	public void setHasMoved() {
+		hasMoved = true;
+	}
+
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 		if (!super.isValidMove(move, board)) {
 			return false;
 		}
 
 		if (Math.abs(move.toRow - move.fromRow) <= 1 && Math.abs(move.toColumn - move.fromColumn) <= 1) {
-			hasMoved = true;
 			return true;
 		} else {
 			// Checking for castling
@@ -34,9 +37,6 @@ public class King extends ChessPiece {
 							board[move.toRow][move.toColumn + 1] == null && board[7][move.toColumn - 1] == null &&
 							board[7][0] != null && board[7][0].type().equals("Rook") &&
 							board[7][0].player() == Player.WHITE && !((Rook) board[7][0]).hasMoved()) {
-						board[7][3] = board[7][0];
-						board[7][0] = null;
-						hasMoved = true;
 						return true;
 					}
 					// Checking for the right castling
@@ -44,14 +44,11 @@ public class King extends ChessPiece {
 							board[move.toRow][move.toColumn - 1] == null && board[7][7] != null &&
 							board[7][7].type().equals("Rook") && board[7][7].player() == Player.WHITE &&
 							!((Rook) board[7][7]).hasMoved()) {
-						board[7][5] = board[7][7];
-						board[7][7] = null;
-						hasMoved = true;
 						return true;
 					}
 				}
 			}
-			/** Checking for castling of black player */
+			// Checking for castling of black player
 			if (player() == Player.BLACK) {
 				if (move.fromRow == 0 && move.fromColumn == 4 && !hasMoved) {
 					// Checking for the left castling
@@ -59,8 +56,6 @@ public class King extends ChessPiece {
 							board[move.toRow][move.toColumn + 1] == null && board[0][move.toColumn - 1] == null &&
 							board[0][0] != null && board[0][0].type().equals("Rook") &&
 							board[0][0].player() == Player.BLACK && !((Rook) board[0][0]).hasMoved()) {
-						board[0][3] = board[0][0];
-						board[0][0] = null;
 						return true;
 					}
 					// Checking for the right castling
@@ -68,8 +63,6 @@ public class King extends ChessPiece {
 							board[move.toRow][move.toColumn - 1] == null && board[0][7] != null &&
 							board[0][7].type().equals("Rook") && board[0][7].player() == Player.BLACK &&
 							!((Rook) board[0][7]).hasMoved()) {
-						board[0][5] = board[0][7];
-						board[0][7] = null;
 						return true;
 					}
 				}

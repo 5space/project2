@@ -1,7 +1,6 @@
 package project2;
 
 public class Rook extends ChessPiece {
-
 	boolean hasMoved = false;
 
 	public Rook(Player player) {
@@ -14,6 +13,10 @@ public class Rook extends ChessPiece {
 
 	public boolean hasMoved() {
 		return hasMoved;
+	}
+
+	public void setHasMoved() {
+		hasMoved = true;
 	}
 
 	// determines if the move is valid for a rook piece
@@ -73,8 +76,8 @@ public class Rook extends ChessPiece {
 				}
 			}
 		}
+
 		// If there's no piece in the way
-		hasMoved = true;
 		return true;
 	}
 }

@@ -12,8 +12,20 @@ public class Pawn extends ChessPiece {
 		return "Pawn";
 	}
 
+	public boolean hasMoved() {
+		return hasMoved;
+	}
+
+	public void setHasMoved() {
+		hasMoved = true;
+	}
+
 	public int getEnPassantTimer() {
 		return enPassantTimer;
+	}
+
+	public void startEnPassantTimer() {
+		enPassantTimer = 2;
 	}
 
 	public void decEnPassantTimer() {
@@ -33,14 +45,11 @@ public class Pawn extends ChessPiece {
 		if (player() == Player.WHITE) {
 			// Normal 1 move forward
 			if (move.fromColumn == move.toColumn && move.fromRow == move.toRow + 1 && board[move.toRow][move.toColumn] == null) {
-				hasMoved = true;
 				return true;
 			}
 			// If the pawn hasn't moved yet, it can move 2 spaces forward
 			if (!hasMoved && move.fromColumn == move.toColumn && move.fromRow == move.toRow + 2 &&
 					board[move.toRow + 1][move.toColumn] == null && board[move.toRow][move.toColumn] == null) {
-				hasMoved = true;
-				enPassantTimer = 2;
 				return true;
 			}
 			if ((move.fromColumn == move.toColumn + 1 || move.fromColumn == move.toColumn - 1) &&
@@ -48,7 +57,6 @@ public class Pawn extends ChessPiece {
 				// Normal piece capture
 				if (board[move.toRow][move.toColumn] != null &&
 						board[move.toRow][move.toColumn].player() == Player.BLACK) {
-					hasMoved = true;
 					return true;
 				}
 				// En passant
@@ -56,23 +64,18 @@ public class Pawn extends ChessPiece {
 						board[move.toRow + 1][move.toColumn].type().equals("Pawn") &&
 						board[move.toRow + 1][move.toColumn].player() == Player.BLACK &&
 						((Pawn) board[move.toRow + 1][move.toColumn]).getEnPassantTimer() >= 1) {
-					board[move.toRow + 1][move.toColumn] = null;
-					hasMoved = true;
 					return true;
 				}
 			}
 
-		} else {
+		} else {  // player() == Player.BLACK
 			// Normal 1 move forward
 			if (move.fromColumn == move.toColumn && move.fromRow == move.toRow - 1 && board[move.toRow][move.toColumn] == null) {
-				hasMoved = true;
 				return true;
 			}
 			// If the pawn hasn't moved yet, it can move 2 spaces forward
 			if (!hasMoved && move.fromColumn == move.toColumn && move.fromRow == move.toRow - 2 &&
 					board[move.toRow][move.toColumn] == null) {
-				hasMoved = true;
-				enPassantTimer = 2;
 				return true;
 			}
 			// Can move diagonally forward if there is an enemy piece there
@@ -81,7 +84,6 @@ public class Pawn extends ChessPiece {
 				// Normal piece there
 				if (board[move.toRow][move.toColumn] != null &&
 						board[move.toRow][move.toColumn].player() == Player.WHITE) {
-					hasMoved = true;
 					return true;
 				}
 				// En passant
@@ -89,8 +91,6 @@ public class Pawn extends ChessPiece {
 						board[move.toRow - 1][move.toColumn].type().equals("Pawn") &&
 						board[move.toRow - 1][move.toColumn].player() == Player.WHITE &&
 						((Pawn) board[move.toRow - 1][move.toColumn]).getEnPassantTimer() >= 1) {
-					board[move.toRow - 1][move.toColumn] = null;
-					hasMoved = true;
 					return true;
 				}
 			}

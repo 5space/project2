@@ -28,9 +28,8 @@ public class ChessPanel extends JPanel {
     private int toRow;
     private int fromCol;
     private int toCol;
-    // declare other instance variables as needed
 
-    /** when user click a button an action will be executed*/
+    /* when user click a button an action will be executed*/
     private listener listener;
 
 
@@ -146,13 +145,11 @@ public class ChessPanel extends JPanel {
 
     // method that updates the board
     private void displayBoard() {
-
         for (int r = 0; r < 8; r++) {
-            for (int c = 0; c < 8; c++)
+            for (int c = 0; c < 8; c++) {
                 if (model.pieceAt(r, c) == null)
                     board[r][c].setIcon(null);
-                else
-                if (model.pieceAt(r, c).player() == Player.WHITE) {
+                else if (model.pieceAt(r, c).player() == Player.WHITE) {
                     if (model.pieceAt(r, c).type().equals("Pawn"))
                         board[r][c].setIcon(wPawn);
                     else if (model.pieceAt(r, c).type().equals("Rook"))
@@ -165,8 +162,7 @@ public class ChessPanel extends JPanel {
                         board[r][c].setIcon(wQueen);
                     else if (model.pieceAt(r, c).type().equals("King"))
                         board[r][c].setIcon(wKing);
-                }
-                else if (model.pieceAt(r, c).player() == Player.BLACK) {
+                } else if (model.pieceAt(r, c).player() == Player.BLACK) {
                     if (model.pieceAt(r, c).type().equals("Pawn"))
                         board[r][c].setIcon(bPawn);
                     else if (model.pieceAt(r, c).type().equals("Rook"))
@@ -180,16 +176,17 @@ public class ChessPanel extends JPanel {
                     else if (model.pieceAt(r, c).type().equals("King"))
                         board[r][c].setIcon(bKing);
                 }
+            }
         }
         repaint();
     }
 
-    /** inner class that represents action listener for buttons*/
+    /* inner class that represents action listener for buttons*/
     private class listener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            for (int r = 0; r < model.numRows(); r++)
-                for (int c = 0; c < model.numColumns(); c++)
-                    if (board[r][c] == event.getSource())
+            for (int r = 0; r < model.numRows(); r++) {
+                for (int c = 0; c < model.numColumns(); c++) {
+                    if (board[r][c] == event.getSource()) {
                         if (firstTurnFlag) {
                             fromRow = r;
                             fromCol = c;
@@ -202,6 +199,8 @@ public class ChessPanel extends JPanel {
                             if (model.isValidMove(m)) {
                                 model.move(m);
                                 displayBoard();
+
+                                // En Passant reset
                                 for (int row = 0; row < model.numRows(); row++) {
                                     for (int col = 0; col < model.numColumns(); col++) {
                                         if (model.pieceAt(row, col) != null && model.pieceAt(row, col).type().equals("Pawn")) {
@@ -211,6 +210,9 @@ public class ChessPanel extends JPanel {
                                 }
                             }
                         }
+                    }
+                }
+            }
         }
     }
 }
