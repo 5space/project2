@@ -5,8 +5,12 @@ public class ChessModel implements IChessModel {
 	private Player player;
 
 
+	/** constructor for the chess board */
 	public ChessModel() {
+		/** chess board size is 8x8 */
 		board = new IChessPiece[8][8];
+
+		/** white player go first (USER)*/
 		player = Player.WHITE;
 
         board[7][0] = new Rook(Player.WHITE);
@@ -34,21 +38,21 @@ public class ChessModel implements IChessModel {
 		}
 	}
 
+	/** check if the game is done*/
 	public boolean isComplete() {
 		boolean valid = false;
 		return valid;
 	}
 
+	/** check if movement on this board is valid*/
 	public boolean isValidMove(Move move) {
-		boolean valid = false;
-
 		if (board[move.fromRow][move.fromColumn] != null)
 			if (board[move.fromRow][move.fromColumn].isValidMove(move, board))
                 return true;
-
-		return valid;
+		return false;
 	}
 
+	/** store the movement coordination to evaluate and execute */
 	public void move(Move move) {
 		if (board[move.fromRow][move.fromColumn].type().equals("Pawn")) {
 			((Pawn) board[move.fromRow][move.fromColumn]).setHasMoved();
@@ -110,49 +114,65 @@ public class ChessModel implements IChessModel {
 		board[move.fromRow][move.fromColumn] = null;
 	}
 
+	/** check if king is checked */
 	public boolean inCheck(Player p) {
-//		for (int r = 0; r < 8; r++) {
-//			for (int c = 0; c < 8; c++) {
-//				if (board[r][c] != null) {
-//					for (int i = 0; i < 8; i++) {
-//						for (int j = 0; j < 8; j++) {
-//							if (board[r][c].isValidMove(new Move(r, c, i, j), board) && board[i][j] != null &&
-//									board[i][j].type().equals("King")) {
-//								return true;
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				if (board[r][c] != null) {
+					for (int i = 0; i < 8; i++) {
+						for (int j = 0; j < 8; j++) {
+							if (board[r][c].isValidMove(new Move(r, c, i, j), board) && board[i][j] != null &&
+									board[i][j].type().equals("King")) {
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
 		return false;
 	}
 
-
+	/** return whose turn is */
 	public Player currentPlayer() {
 		return player;
 	}
 
+	/** return number of row*/
 	public int numRows() {
 		return 8;
 	}
 
+	/** return number of column */
 	public int numColumns() {
 		return 8;
 	}
 
+	/** return what piece at location
+	 * @param row
+	 * @param column
+	 */
 	public IChessPiece pieceAt(int row, int column) {
 		return board[row][column];
 	}
 
+	/** change turn */
 	public void setNextPlayer() {
 		player = player.next();
 	}
 
+	/** create new piece and put it on the board
+	 * @param piece create new piece of chess on demand
+	 *
+	 * coordination
+	 * @param column
+	 * @param row
+	 */
 	public void setPiece(int row, int column, IChessPiece piece) {
 		board[row][column] = piece;
 	}
 
+	/** A.I. for black Player side*/
 	public void AI() {
 		/* Write a simple AI set of rules in the following order.
 		 * a. Check to see if you are in check.

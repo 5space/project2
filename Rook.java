@@ -1,25 +1,32 @@
 package project2;
 
 public class Rook extends ChessPiece {
+	/** check if the rook has moved for castling */
 	boolean hasMoved = false;
 
+	/** constructor
+	 * @param player
+	 */
 	public Rook(Player player) {
 		super(player);
 	}
 
+	/** return type as a string */
 	public String type() {
 		return "Rook";
 	}
 
+	/** return move status */
 	public boolean hasMoved() {
 		return hasMoved;
 	}
 
+	/** set moving status */
 	public void setHasMoved() {
 		hasMoved = true;
 	}
 
-	// determines if the move is valid for a rook piece
+	/** check if the movement is valid for a rook piece */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 		if (!super.isValidMove(move, board)) {
 			return false;

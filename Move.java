@@ -7,16 +7,16 @@ public class Move {
 	 */
 	public int fromRow, fromColumn, toRow, toColumn;
 
-	/**Default constructor*/
+	/** Default constructor*/
 	public Move() {
 	}
 
 	/**
 	 * Constructor of the move with destination
-	 * * @param fromRow initial row location
-	 * 	 * @param fromColumn initial column location
-	 * 	 * @param toRow destine row
-	 * 	 * @param toColumn destine column
+	 * @param fromRow initial row location
+	 * @param fromColumn initial column location
+	 * @param toRow destine row
+	 * @param toColumn destine column
 	 */
 	public Move(int fromRow, int fromColumn, int toRow, int toColumn) {
 		this.fromRow = fromRow;

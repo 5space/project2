@@ -2,10 +2,14 @@ package project2;
 
 public class Bishop extends ChessPiece {
 
+	/** constructor
+	 * @param player
+	 */
 	public Bishop(Player player) {
 		super(player);
 	}
 
+	/** return piece type as string */
 	public String type() {
 		return "Bishop";
 	}

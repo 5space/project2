@@ -6,9 +6,11 @@ import javax.swing.*;
 
 public class ChessPanel extends JPanel {
 
+    /** button */
     private JButton[][] board;
     private ChessModel model;
 
+    /** image of the chess piece */
     private ImageIcon wRook;
     private ImageIcon wBishop;
     private ImageIcon wQueen;
@@ -22,26 +24,27 @@ public class ChessPanel extends JPanel {
     private ImageIcon bPawn;
     private ImageIcon bKnight;
 
-
+    /** coordination on the board */
     private boolean firstTurnFlag;
     private int fromRow;
     private int toRow;
     private int fromCol;
     private int toCol;
 
-    /* when user click a button an action will be executed*/
+    /** when user click a button an action will be executed*/
     private listener listener;
 
 
+    /** constructor */
     public ChessPanel() {
         model = new ChessModel();
         board = new JButton[model.numRows()][model.numColumns()];
         listener = new listener();
         createIcons();
 
-        JPanel boardpanel = new JPanel();
-        JPanel buttonpanel = new JPanel();
-        boardpanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
+        JPanel boardPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+        boardPanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
 
         for (int r = 0; r < model.numRows(); r++) {
             for (int c = 0; c < model.numColumns(); c++) {
@@ -54,15 +57,16 @@ public class ChessPanel extends JPanel {
                     placeBlackPieces(r, c);
 
                 setBackGroundColor(r, c);
-                boardpanel.add(board[r][c]);
+                boardPanel.add(board[r][c]);
             }
         }
-        add(boardpanel, BorderLayout.WEST);
-        boardpanel.setPreferredSize(new Dimension(600, 600));
-        add(buttonpanel);
+        add(boardPanel, BorderLayout.WEST);
+        boardPanel.setPreferredSize(new Dimension(600, 600));
+        add(buttonPanel);
         firstTurnFlag = true;
     }
 
+    /** paint the board with 2 colors*/
     private void setBackGroundColor(int r, int c) {
         if ((c % 2 == 1 && r % 2 == 0) || (c % 2 == 0 && r % 2 == 1)) {
             board[r][c].setBackground(Color.LIGHT_GRAY);
@@ -71,6 +75,7 @@ public class ChessPanel extends JPanel {
         }
     }
 
+    /** create white pieces on the board */
     private void placeWhitePieces(int r, int c) {
         if (model.pieceAt(r, c).type().equals("Pawn")) {
             board[r][c] = new JButton(null, wPawn);
@@ -98,6 +103,7 @@ public class ChessPanel extends JPanel {
         }
     }
 
+    /** create black pieces on the board */
     private void placeBlackPieces(int r, int c) {
         if (model.pieceAt(r, c).type().equals("Pawn")) {
             board[r][c] = new JButton(null, bPawn);
@@ -125,6 +131,7 @@ public class ChessPanel extends JPanel {
         }
     }
 
+    /** get the image from file */
     private void createIcons() {
         // Sets the Image for white player pieces
         wRook = new ImageIcon("./icons/wRook.png");
@@ -143,7 +150,11 @@ public class ChessPanel extends JPanel {
         bKnight = new ImageIcon("./icons/bKnight.png");
     }
 
-    // method that updates the board
+    /** method that updates the board
+     * @param selCol
+     * @param selRow
+     * @param pieceSelected
+     */
     private void displayBoard(boolean pieceSelected, int selRow, int selCol) {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
@@ -188,8 +199,9 @@ public class ChessPanel extends JPanel {
         repaint();
     }
 
-    /* inner class that represents action listener for buttons*/
+    /** inner class that represents action listener for buttons*/
     private class listener implements ActionListener {
+        // perform action when click
         public void actionPerformed(ActionEvent event) {
             for (int r = 0; r < model.numRows(); r++) {
                 for (int c = 0; c < model.numColumns(); c++) {
@@ -206,11 +218,12 @@ public class ChessPanel extends JPanel {
                             Move m = new Move(fromRow, fromCol, toRow, toCol);
                             if (model.isValidMove(m)) {
                                 model.move(m);
-
                                 // En Passant reset
                                 for (int row = 0; row < model.numRows(); row++) {
                                     for (int col = 0; col < model.numColumns(); col++) {
-                                        if (model.pieceAt(row, col) != null && model.pieceAt(row, col).type().equals("Pawn")) {
+                                        if (model.pieceAt(row, col) != null &&
+                                            model.pieceAt(row, col).type().equals("Pawn"))
+                                        {
                                             ((Pawn) model.pieceAt(row, col)).decEnPassantTimer();
                                         }
                                     }

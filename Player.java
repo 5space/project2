@@ -11,9 +11,6 @@ public enum Player {
 	public Player next() {
 		if (this == BLACK)
 			return WHITE;
-		else
-		 	return BLACK;
-		
-	//	return this == BLACK ? WHITE : BLACK;
+		return BLACK;
 	}
 }

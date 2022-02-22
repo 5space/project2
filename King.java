@@ -4,30 +4,35 @@ public class King extends ChessPiece {
 
 	boolean hasMoved = false;
 
+	/** constructor utilizes super constructor*/
 	public King(Player player) {
 		super(player);
 	}
 
+	/** return "King" type */
 	public String type() {
 		return "King";
 	}
 
+	/** return moved status */
 	public boolean hasMoved() {
 		return hasMoved;
 	}
 
+	/** set moved status to true */
 	public void setHasMoved() {
 		hasMoved = true;
 	}
 
+	/** check if king movement is valid*/
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 		if (!super.isValidMove(move, board)) {
 			return false;
 		}
-
 		if (Math.abs(move.toRow - move.fromRow) <= 1 && Math.abs(move.toColumn - move.fromColumn) <= 1) {
 			return true;
-		} else {
+		}
+		else {
 			// Checking for castling
 			if (player() == Player.WHITE) {
 				// Checks the king has not moved and is still in the starting position
