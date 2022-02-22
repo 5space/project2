@@ -3,7 +3,7 @@ package project2;
 public class Pawn extends ChessPiece {
 	boolean hasMoved;
 	/** how many step the pawn can move */
-	int enPassantTimer = 0;
+	boolean enPassantVulnerable = false;
 
 	/** constructor
 	 * @param player
@@ -28,21 +28,13 @@ public class Pawn extends ChessPiece {
 	}
 
 	/** set the enPassant move for chess */
-	public int getEnPassantTimer() {
-		return enPassantTimer;
+	public boolean isEnPassantVulnerable() {
+		return enPassantVulnerable;
 	}
 
 	/** set en passant at the beginning */
-	public void startEnPassantTimer() {
-		enPassantTimer = 2;
-	}
-
-	/** count down how many times players can do en Passant move*/
-	public void decEnPassantTimer() {
-		if (enPassantTimer > 0) {
-			System.out.println("Decremented en passant timer from " + enPassantTimer);
-			enPassantTimer--;
-		}
+	public void setEnPassantVulnerable(boolean bool) {
+		enPassantVulnerable = bool;
 	}
 
 	@Override
@@ -78,7 +70,7 @@ public class Pawn extends ChessPiece {
 				else if (board[move.toRow + 1][move.toColumn] != null &&
 						board[move.toRow + 1][move.toColumn].type().equals("Pawn") &&
 						board[move.toRow + 1][move.toColumn].player() == Player.BLACK &&
-						((Pawn) board[move.toRow + 1][move.toColumn]).getEnPassantTimer() >= 1) {
+						((Pawn) board[move.toRow + 1][move.toColumn]).isEnPassantVulnerable()) {
 					return true;
 				}
 			}
@@ -105,7 +97,7 @@ public class Pawn extends ChessPiece {
 				else if (board[move.toRow - 1][move.toColumn] != null &&
 						board[move.toRow - 1][move.toColumn].type().equals("Pawn") &&
 						board[move.toRow - 1][move.toColumn].player() == Player.WHITE &&
-						((Pawn) board[move.toRow - 1][move.toColumn]).getEnPassantTimer() >= 1) {
+						((Pawn) board[move.toRow - 1][move.toColumn]).isEnPassantVulnerable()) {
 					return true;
 				}
 			}

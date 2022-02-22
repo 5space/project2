@@ -62,7 +62,7 @@ public class ChessModel implements IChessModel {
 			if (board[move.fromRow][move.fromColumn].player() == Player.WHITE) {
 				// Two steps forward
 				if (move.fromRow == move.toRow + 2) {
-					((Pawn) board[move.fromRow][move.fromColumn]).startEnPassantTimer();
+					((Pawn) board[move.fromRow][move.fromColumn]).setEnPassantVulnerable(true);
 				}
 
 				// Checks for en passant
@@ -73,7 +73,7 @@ public class ChessModel implements IChessModel {
 			} else {  // player is BLACK
 				// Two steps forward
 				if (move.fromRow == move.toRow - 2) {
-					((Pawn) board[move.fromRow][move.fromColumn]).startEnPassantTimer();
+					((Pawn) board[move.fromRow][move.fromColumn]).setEnPassantVulnerable(true);
 				}
 
 				// Checks for en passant

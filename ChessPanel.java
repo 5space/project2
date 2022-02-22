@@ -217,20 +217,23 @@ public class ChessPanel extends JPanel {
                             firstTurnFlag = true;
                             Move m = new Move(fromRow, fromCol, toRow, toCol);
                             if (model.isValidMove(m)) {
-                                model.move(m);
                                 // En Passant reset
                                 for (int row = 0; row < model.numRows(); row++) {
                                     for (int col = 0; col < model.numColumns(); col++) {
                                         if (model.pieceAt(row, col) != null &&
-                                            model.pieceAt(row, col).type().equals("Pawn"))
+                                                model.pieceAt(row, col).type().equals("Pawn"))
                                         {
-                                            ((Pawn) model.pieceAt(row, col)).decEnPassantTimer();
+                                            ((Pawn) model.pieceAt(row, col)).setEnPassantVulnerable(false);
                                         }
                                     }
                                 }
+                                model.move(m);
                             }
                             // After the 2nd click (move), even if move failed
                             displayBoard(false, 0, 0);
+                            if (model.inCheck(model.currentPlayer())) {
+                                JOptionPane.showMessageDialog(null, "You are in check!");
+                            }
                         }
                     }
                 }
