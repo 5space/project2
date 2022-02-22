@@ -24,7 +24,10 @@ public class Move {
 		this.toRow = toRow;
 		this.toColumn = toColumn;
 	}
-
+	/**
+	 * Overrides to string
+	 * from object
+	 */
 	@Override
 	public String toString() {
 		return "Move [fromRow=" + fromRow + ", fromColumn=" + fromColumn + ", toRow=" + toRow + ", toColumn=" + toColumn

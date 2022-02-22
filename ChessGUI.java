@@ -1,5 +1,10 @@
 package project2;
-
+/** Main for the chess Gui
+ * creates a chess board and pieces
+ * and enables you to play a game against AI
+ * @author Logan, Chirs, Don
+ * @version 2/22/2022
+ */
 import java.awt.Dimension;
 
 import javax.swing.JFrame;

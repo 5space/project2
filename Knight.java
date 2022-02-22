@@ -12,7 +12,11 @@ public class Knight extends ChessPiece {
 		return "Knight";
 	}
 
-	/** check the knight move is valid or not */
+	/** check the knight move is valid or not
+	 *@param move from the move class
+	 *@param board board from the cless piece class
+	 *@return true if valid false if invalid move
+	 * */
 	public boolean isValidMove(Move move, IChessPiece[][] board){
 		if (!super.isValidMove(move, board)) {
 			return false;

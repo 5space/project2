@@ -24,7 +24,11 @@ public class King extends ChessPiece {
 		hasMoved = true;
 	}
 
-	/** check if king movement is valid*/
+	/** check if king movement is valid
+	 *@param move from the move class
+	 * @param board board from the cless piece class
+	 * @return true if valid move false if invalid chess move
+	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 		if (!super.isValidMove(move, board)) {
 			return false;

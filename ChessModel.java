@@ -44,7 +44,10 @@ public class ChessModel implements IChessModel {
 		return valid;
 	}
 
-	/** check if movement on this board is valid*/
+	/** check if movement on this board is valid
+	 * @param move from Move class
+	 * @return true if move is valid false if invalid
+	 */
 	public boolean isValidMove(Move move) {
 		if (board[move.fromRow][move.fromColumn] != null)
 			if (board[move.fromRow][move.fromColumn].isValidMove(move, board))

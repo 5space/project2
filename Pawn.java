@@ -46,7 +46,12 @@ public class Pawn extends ChessPiece {
 	}
 
 	@Override
-	/** determines if the move is valid for a pawn piece */
+	/** determines if the move is valid for a pawn piece
+	 * @param move from the move class
+	 * @param board board from the cless piece class
+	 * @return true if the selected pawn
+	 * move is valid based on chess rules
+	 * */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 		if (!super.isValidMove(move, board)) {
 			return false;

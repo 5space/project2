@@ -6,6 +6,7 @@ public class Rook extends ChessPiece {
 
 	/** constructor
 	 * @param player
+	 * @return super class
 	 */
 	public Rook(Player player) {
 		super(player);
