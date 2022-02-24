@@ -3,12 +3,14 @@ package project2;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicOptionPaneUI;
 
 public class ChessPanel extends JPanel {
 
     /** button */
     private JButton[][] board;
     private ChessModel model;
+    private JButton undoButton;
 
     /** image of the chess piece */
     private ImageIcon wRook;
@@ -44,6 +46,9 @@ public class ChessPanel extends JPanel {
 
         JPanel boardPanel = new JPanel();
         JPanel buttonPanel = new JPanel();
+        undoButton = new JButton("Undo");
+        undoButton.addActionListener(listener);
+
         boardPanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
 
         for (int r = 0; r < model.numRows(); r++) {
@@ -63,6 +68,7 @@ public class ChessPanel extends JPanel {
         add(boardPanel, BorderLayout.WEST);
         boardPanel.setPreferredSize(new Dimension(600, 600));
         add(buttonPanel);
+        add(undoButton);
         firstTurnFlag = true;
     }
 
@@ -202,14 +208,22 @@ public class ChessPanel extends JPanel {
     /** inner class that represents action listener for buttons*/
     private class listener implements ActionListener {
         // perform action when click
+
         public void actionPerformed(ActionEvent event) {
+            if (event.getSource() == undoButton) {
+                model.undo();
+                displayBoard(false, 0, 0);
+            }
+
             for (int r = 0; r < model.numRows(); r++) {
                 for (int c = 0; c < model.numColumns(); c++) {
                     if (board[r][c] == event.getSource()) {
                         if (firstTurnFlag) {
                             fromRow = r;
                             fromCol = c;
-                            firstTurnFlag = false;
+                            if (model.pieceAt(r, c) != null) {
+                                firstTurnFlag = false;
+                            }
                             displayBoard(true, r, c);
                         } else {
                             toRow = r;
@@ -217,16 +231,6 @@ public class ChessPanel extends JPanel {
                             firstTurnFlag = true;
                             Move m = new Move(fromRow, fromCol, toRow, toCol);
                             if (model.isValidMove(m)) {
-                                // En Passant reset
-                                for (int row = 0; row < model.numRows(); row++) {
-                                    for (int col = 0; col < model.numColumns(); col++) {
-                                        if (model.pieceAt(row, col) != null &&
-                                                model.pieceAt(row, col).type().equals("Pawn"))
-                                        {
-                                            ((Pawn) model.pieceAt(row, col)).setEnPassantVulnerable(false);
-                                        }
-                                    }
-                                }
                                 model.move(m);
                             }
                             // After the 2nd click (move), even if move failed

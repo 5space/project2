@@ -20,13 +20,13 @@ public class King extends ChessPiece {
 	}
 
 	/** set moved status to true */
-	public void setHasMoved() {
-		hasMoved = true;
+	public void setHasMoved(boolean bool) {
+		hasMoved = bool;
 	}
 
 	/** check if king movement is valid
 	 *@param move from the move class
-	 * @param board board from the cless piece class
+	 * @param board board from the chess piece class
 	 * @return true if valid move false if invalid chess move
 	 */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
@@ -49,16 +49,14 @@ public class King extends ChessPiece {
 						return true;
 					}
 					// Checking for the right castling
-					if (move.toRow == 7 && move.toColumn == 6 && board[move.toRow][move.toColumn] == null &&
+					return move.toRow == 7 && move.toColumn == 6 && board[move.toRow][move.toColumn] == null &&
 							board[move.toRow][move.toColumn - 1] == null && board[7][7] != null &&
 							board[7][7].type().equals("Rook") && board[7][7].player() == Player.WHITE &&
-							!((Rook) board[7][7]).hasMoved()) {
-						return true;
-					}
+							!((Rook) board[7][7]).hasMoved();
 				}
 			}
 			// Checking for castling of black player
-			if (player() == Player.BLACK) {
+			else if (player() == Player.BLACK) {
 				if (move.fromRow == 0 && move.fromColumn == 4 && !hasMoved) {
 					// Checking for the left castling
 					if (move.toRow == 0 && move.toColumn == 2 && board[move.toRow][move.toColumn] == null &&
@@ -68,12 +66,10 @@ public class King extends ChessPiece {
 						return true;
 					}
 					// Checking for the right castling
-					if (move.toRow == 0 && move.toColumn == 6 && board[move.toRow][move.toColumn] == null &&
+					return move.toRow == 0 && move.toColumn == 6 && board[move.toRow][move.toColumn] == null &&
 							board[move.toRow][move.toColumn - 1] == null && board[0][7] != null &&
 							board[0][7].type().equals("Rook") && board[0][7].player() == Player.BLACK &&
-							!((Rook) board[0][7]).hasMoved()) {
-						return true;
-					}
+							!((Rook) board[0][7]).hasMoved();
 				}
 
 			}

@@ -1,9 +1,11 @@
 package project2;
 
+import java.util.ArrayList;
+
 public class ChessModel implements IChessModel {
     private IChessPiece[][] board;
 	private Player player;
-
+	ArrayList<Object> moveHistory;
 
 	/** constructor for the chess board */
 	public ChessModel() {
@@ -36,6 +38,8 @@ public class ChessModel implements IChessModel {
 		for (int i = 0; i < 8; i++) {
 			board[1][i] = new Pawn(Player.BLACK);
 		}
+
+		moveHistory = new ArrayList <Object>();
 	}
 
 	/** check if the game is done*/
@@ -46,7 +50,7 @@ public class ChessModel implements IChessModel {
 
 	/** check if movement on this board is valid
 	 * @param move from Move class
-	 * @return true if move is valid false if invalid
+	 * @return if move is valid
 	 */
 	public boolean isValidMove(Move move) {
 		if (board[move.fromRow][move.fromColumn] != null)
@@ -57,8 +61,28 @@ public class ChessModel implements IChessModel {
 
 	/** store the movement coordination to evaluate and execute */
 	public void move(Move move) {
+		ArrayList<Object> tempMoveHistory = new ArrayList <Object>();
+
+		ArrayList<Object> extraPieces = new ArrayList <Object>();
+
+
+		// En Passant reset
+		for (int row = 0; row < numRows(); row++) {
+			for (int col = 0; col < numColumns(); col++) {
+				if (pieceAt(row, col) != null &&
+						pieceAt(row, col).type().equals("Pawn")) {
+					((Pawn) pieceAt(row, col)).setEnPassantVulnerable(false);
+
+				}
+			}
+		}
+
+		boolean hasMoved = false;
 		if (board[move.fromRow][move.fromColumn].type().equals("Pawn")) {
-			((Pawn) board[move.fromRow][move.fromColumn]).setHasMoved();
+			if (!((Pawn) board[move.fromRow][move.fromColumn]).hasMoved()) {
+				((Pawn) board[move.fromRow][move.fromColumn]).setHasMoved(true);
+				hasMoved = true;
+			}
 			if (board[move.fromRow][move.fromColumn].player() == Player.WHITE) {
 				// Two steps forward
 				if (move.fromRow == move.toRow + 2) {
@@ -68,6 +92,8 @@ public class ChessModel implements IChessModel {
 				// Checks for en passant
 				if ((move.fromColumn == move.toColumn + 1 || move.fromColumn == move.toColumn - 1) &&
 						move.fromRow == move.toRow + 1 && board[move.toRow][move.toColumn] == null) {
+					extraPieces.add(board[move.toRow + 1][move.toColumn]);
+					extraPieces.add("" + (move.toRow + 1) + move.toColumn);
 					board[move.toRow + 1][move.toColumn] = null;
 				}
 			} else {  // player is BLACK
@@ -79,6 +105,8 @@ public class ChessModel implements IChessModel {
 				// Checks for en passant
 				if ((move.fromColumn == move.toColumn + 1 || move.fromColumn == move.toColumn - 1) &&
 						move.fromRow == move.toRow - 1 && board[move.toRow][move.toColumn] == null) {
+					extraPieces.add(board[move.toRow - 1][move.toColumn]);
+					extraPieces.add("" + (move.toRow - 1) + move.toColumn);
 					board[move.toRow - 1][move.toColumn] = null;
 				}
 			}
@@ -88,30 +116,66 @@ public class ChessModel implements IChessModel {
                 if (board[move.fromRow][move.fromColumn].player() == Player.WHITE) {
                     // Left castle
                     if (move.toRow == 7 && move.toColumn == 2) {
+						extraPieces.add(board[7][0]);
+						extraPieces.add("" + 7 + 0);
+						extraPieces.add(null);
+						extraPieces.add("" + 7 + 3);
                         board[7][3] = board[7][0];
                         board[7][0] = null;
                     // Right castle
                     } else if (move.toRow == 7 && move.toColumn == 6) {
+						extraPieces.add(board[7][7]);
+						extraPieces.add("" + 7 + 7);
+						extraPieces.add(null);
+						extraPieces.add("" + 7 + 5);
                         board[7][5] = board[7][7];
                         board[7][7] = null;
                     }
                 } else {  // player is BLACK
                     // Left castle
                     if (move.toRow == 0 && move.toColumn == 2) {
+						extraPieces.add(board[0][0]);
+						extraPieces.add("" + 0 + 0);
+						extraPieces.add(null);
+						extraPieces.add("" + 0 + 3);
                         board[0][3] = board[0][0];
                         board[0][0] = null;
                     // Right castle
                     } else if (move.toRow == 0 && move.toColumn == 6) {
+						extraPieces.add(board[0][7]);
+						extraPieces.add("" + 0 + 7);
+						extraPieces.add(null);
+						extraPieces.add("" + 0 + 5);
                         board[0][5] = board[0][7];
                         board[0][7] = null;
                     }
                 }
             }
-            ((King) board[move.fromRow][move.fromColumn]).setHasMoved();
+            ((King) board[move.fromRow][move.fromColumn]).setHasMoved(true);
+			hasMoved = true;
         } else if (board[move.fromRow][move.fromColumn].type().equals("Rook")) {
-			((Rook) board[move.fromRow][move.fromColumn]).setHasMoved();
+			((Rook) board[move.fromRow][move.fromColumn]).setHasMoved(true);
+			hasMoved = true;
 		}
 
+		// 0. Add direct move to tempMoveHistory
+		tempMoveHistory.add(move);
+
+		// 1. Adds direct piece captured to tempMoveHistory (null if no piece captured)
+		if (board[move.toRow][move.toColumn] != null) {
+			tempMoveHistory.add(board[move.toRow][move.toColumn]);
+		} else {
+			tempMoveHistory.add(null);
+		}
+
+		// 2. Add extra piece movement to tempMoveHistory (null if no extra piece movement)
+		tempMoveHistory.add(extraPieces);
+
+		// 3. Set hasMoved to true if piece moved
+		tempMoveHistory.add(hasMoved);
+
+		// Finally, add the tempMoveHistory to the moveHistory
+		moveHistory.add(tempMoveHistory);
 
 		board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
 		board[move.fromRow][move.fromColumn] = null;
@@ -124,8 +188,8 @@ public class ChessModel implements IChessModel {
 				if (board[r][c] != null) {
 					for (int i = 0; i < 8; i++) {
 						for (int j = 0; j < 8; j++) {
-							if (board[r][c].isValidMove(new Move(r, c, i, j), board) && board[i][j] != null &&
-									board[i][j].type().equals("King")) {
+							if (board[i][j] != null && board[i][j].type().equals("King") &&
+									board[r][c].isValidMove(new Move(r, c, i, j), board)) {
 								return true;
 							}
 						}
@@ -173,6 +237,47 @@ public class ChessModel implements IChessModel {
 	 */
 	public void setPiece(int row, int column, IChessPiece piece) {
 		board[row][column] = piece;
+	}
+
+	public void undo() {
+		// Get the last moveHistory from the move history
+		ArrayList<Object> lastMoveFull = (ArrayList<Object>) moveHistory.get(moveHistory.size() - 1);
+		moveHistory.remove(moveHistory.size() - 1);
+
+		// 0. Get the last move from the last move history
+		Move lastMove = (Move) lastMoveFull.get(0);
+		// Returns the direct moved piece back to its old spot
+		setPiece(lastMove.fromRow, lastMove.fromColumn, board[lastMove.toRow][lastMove.toColumn]);
+		board[lastMove.toRow][lastMove.toColumn] = null;
+
+		// 1. If a piece was directly captured, return it back
+		if (lastMoveFull.get(1) != null) {
+			setPiece(lastMove.toRow, lastMove.toColumn, (IChessPiece) lastMoveFull.get(1));
+		}
+
+		// 2. Handling extra pieces moved (castle, en passant)
+		ArrayList<Object> extraPieces = (ArrayList<Object>) lastMoveFull.get(2);
+		if (extraPieces.size() >= 2) {
+			setPiece(extraPieces.get(1).toString().charAt(0) - '0',
+					extraPieces.get(1).toString().charAt(1) - '0',
+					(IChessPiece) extraPieces.get(0));
+		}
+		if (extraPieces.size() == 4) {
+			setPiece(extraPieces.get(3).toString().charAt(0) - '0',
+					extraPieces.get(3).toString().charAt(1) - '0',
+					null);
+		}
+
+		// 3. Set hasMoved to false if piece moved
+		if ((boolean) lastMoveFull.get(3)) {
+			if (board[lastMove.fromRow][lastMove.fromColumn].type().equals("Pawn")) {
+				((Pawn) board[lastMove.fromRow][lastMove.fromColumn]).setHasMoved(false);
+			} else if (board[lastMove.fromRow][lastMove.fromColumn].type().equals("King")) {
+				((King) board[lastMove.fromRow][lastMove.fromColumn]).setHasMoved(false);
+			} else if (board[lastMove.fromRow][lastMove.fromColumn].type().equals("Rook")) {
+				((Rook) board[lastMove.fromRow][lastMove.fromColumn]).setHasMoved(false);
+			}
+		}
 	}
 
 	/** A.I. for black Player side*/

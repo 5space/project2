@@ -5,8 +5,7 @@ public class Rook extends ChessPiece {
 	boolean hasMoved = false;
 
 	/** constructor
-	 * @param player
-	 * @return super class
+	 * @param player The owner of the piece
 	 */
 	public Rook(Player player) {
 		super(player);
@@ -23,8 +22,8 @@ public class Rook extends ChessPiece {
 	}
 
 	/** set moving status */
-	public void setHasMoved() {
-		hasMoved = true;
+	public void setHasMoved(boolean bool) {
+		hasMoved = bool;
 	}
 
 	/** check if the movement is valid for a rook piece */

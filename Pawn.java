@@ -23,8 +23,8 @@ public class Pawn extends ChessPiece {
 	}
 
 	/** set moved status */
-	public void setHasMoved() {
-		hasMoved = true;
+	public void setHasMoved(boolean bool) {
+		hasMoved = bool;
 	}
 
 	/** set the enPassant move for chess */
@@ -38,11 +38,11 @@ public class Pawn extends ChessPiece {
 	}
 
 	@Override
-	/** determines if the move is valid for a pawn piece
+	/**********************************************************************
+	 *  determines if the move is valid for a pawn piece
 	 * @param move from the move class
-	 * @param board board from the cless piece class
-	 * @return true if the selected pawn
-	 * move is valid based on chess rules
+	 * @param board a chess board
+	 * @return true if the selected pawn move is valid based on chess rules
 	 * */
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 		if (!super.isValidMove(move, board)) {
@@ -59,6 +59,7 @@ public class Pawn extends ChessPiece {
 					board[move.toRow + 1][move.toColumn] == null && board[move.toRow][move.toColumn] == null) {
 				return true;
 			}
+			// Moving diagonally (normal capture or en passant)
 			if ((move.fromColumn == move.toColumn + 1 || move.fromColumn == move.toColumn - 1) &&
 					move.fromRow == move.toRow + 1) {
 				// Normal piece capture
@@ -67,14 +68,11 @@ public class Pawn extends ChessPiece {
 					return true;
 				}
 				// En passant
-				else if (board[move.toRow + 1][move.toColumn] != null &&
+				else return board[move.toRow + 1][move.toColumn] != null &&
 						board[move.toRow + 1][move.toColumn].type().equals("Pawn") &&
 						board[move.toRow + 1][move.toColumn].player() == Player.BLACK &&
-						((Pawn) board[move.toRow + 1][move.toColumn]).isEnPassantVulnerable()) {
-					return true;
-				}
+						((Pawn) board[move.toRow + 1][move.toColumn]).isEnPassantVulnerable();
 			}
-
 		} else {  // player() == Player.BLACK
 			// Normal 1 move forward
 			if (move.fromColumn == move.toColumn && move.fromRow == move.toRow - 1 && board[move.toRow][move.toColumn] == null) {
@@ -82,24 +80,23 @@ public class Pawn extends ChessPiece {
 			}
 			// If the pawn hasn't moved yet, it can move 2 spaces forward
 			if (!hasMoved && move.fromColumn == move.toColumn && move.fromRow == move.toRow - 2 &&
+					board[move.toRow - 1][move.toColumn] == null &&
 					board[move.toRow][move.toColumn] == null) {
 				return true;
 			}
-			// Can move diagonally forward if there is an enemy piece there
+			// Moving diagonally (normal capture or en passant)
 			if ((move.fromColumn == move.toColumn + 1 || move.fromColumn == move.toColumn - 1) &&
 					move.fromRow == move.toRow - 1) {
-				// Normal piece there
+				// Normal piece capture
 				if (board[move.toRow][move.toColumn] != null &&
 						board[move.toRow][move.toColumn].player() == Player.WHITE) {
 					return true;
 				}
 				// En passant
-				else if (board[move.toRow - 1][move.toColumn] != null &&
+				else return board[move.toRow - 1][move.toColumn] != null &&
 						board[move.toRow - 1][move.toColumn].type().equals("Pawn") &&
 						board[move.toRow - 1][move.toColumn].player() == Player.WHITE &&
-						((Pawn) board[move.toRow - 1][move.toColumn]).isEnPassantVulnerable()) {
-					return true;
-				}
+						((Pawn) board[move.toRow - 1][move.toColumn]).isEnPassantVulnerable();
 			}
 		}
 		return false;
