@@ -101,6 +101,13 @@ public class ChessModel implements IChessModel {
 					enPassantChanges.add((move.toRow + 1) + "," + move.toColumn + "," + false);
 					board[move.toRow + 1][move.toColumn] = null;
 				}
+
+				// Checks for promotion
+				if (move.toRow == 0) {
+					extraPieces.add(board[move.fromRow][move.fromColumn]);
+					extraPieces.add("" + move.fromRow + move.fromColumn);
+					board[move.fromRow][move.fromColumn] = new Queen(Player.WHITE);
+				}
 			} else {  // player is BLACK
 				// Two steps forward
 				if (move.fromRow == move.toRow - 2) {
@@ -115,6 +122,13 @@ public class ChessModel implements IChessModel {
 					extraPieces.add("" + (move.toRow - 1) + move.toColumn);
 					enPassantChanges.add((move.toRow - 1) + "," + move.toColumn + "," + false);
 					board[move.toRow - 1][move.toColumn] = null;
+				}
+
+				// Checks for promotion
+				if (move.toRow == 7) {
+					extraPieces.add(board[move.fromRow][move.fromColumn]);
+					extraPieces.add("" + move.fromRow + move.fromColumn);
+					board[move.fromRow][move.fromColumn] = new Queen(Player.BLACK);
 				}
 			}
 		} else if (board[move.fromRow][move.fromColumn].type().equals("King")) {
@@ -258,12 +272,9 @@ public class ChessModel implements IChessModel {
 		Move lastMove = (Move) lastMoveFull.get(0);
 		// Returns the direct moved piece back to its old spot
 		setPiece(lastMove.fromRow, lastMove.fromColumn, board[lastMove.toRow][lastMove.toColumn]);
-		board[lastMove.toRow][lastMove.toColumn] = null;
 
 		// 1. If a piece was directly captured, return it back
-		if (lastMoveFull.get(1) != null) {
-			setPiece(lastMove.toRow, lastMove.toColumn, (IChessPiece) lastMoveFull.get(1));
-		}
+		setPiece(lastMove.toRow, lastMove.toColumn, (IChessPiece) lastMoveFull.get(1));
 
 		// 2. Handling extra pieces moved (castle, en passant)
 		ArrayList<Object> extraPieces = (ArrayList<Object>) lastMoveFull.get(2);
