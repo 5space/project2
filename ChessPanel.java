@@ -192,8 +192,13 @@ public class ChessPanel extends JPanel {
                         board[r][c].setIcon(wBishop);
                     else if (model.pieceAt(r, c).type().equals("Queen"))
                         board[r][c].setIcon(wQueen);
-                    else if (model.pieceAt(r, c).type().equals("King"))
+                    else if (model.pieceAt(r, c).type().equals("King")) {
                         board[r][c].setIcon(wKing);
+                        // If the king is in check, make the king's square red
+                        if (model.inCheck(Player.WHITE)) {
+                            board[r][c].setBackground(new Color(255, 153, 153));
+                        }
+                    }
                 } else if (model.pieceAt(r, c).player() == Player.BLACK) {
                     if (model.pieceAt(r, c).type().equals("Pawn"))
                         board[r][c].setIcon(bPawn);
@@ -205,8 +210,13 @@ public class ChessPanel extends JPanel {
                         board[r][c].setIcon(bBishop);
                     else if (model.pieceAt(r, c).type().equals("Queen"))
                         board[r][c].setIcon(bQueen);
-                    else if (model.pieceAt(r, c).type().equals("King"))
+                    else if (model.pieceAt(r, c).type().equals("King")) {
                         board[r][c].setIcon(bKing);
+                        // If the king is in check, make the king's square red
+                        if (model.inCheck(Player.BLACK)) {
+                            board[r][c].setBackground(new Color(255, 153, 153));
+                        }
+                    }
                 }
             }
         }
