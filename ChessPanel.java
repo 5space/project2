@@ -11,6 +11,8 @@ public class ChessPanel extends JPanel {
     private JButton[][] board;
     private ChessModel model;
     private JButton undoButton;
+    private JLabel currentPlayer;
+
 
     /** image of the chess piece */
     private ImageIcon wRook;
@@ -46,10 +48,13 @@ public class ChessPanel extends JPanel {
 
         JPanel boardPanel = new JPanel();
         JPanel buttonPanel = new JPanel();
+        JPanel sidePanel = new JPanel();
         undoButton = new JButton("Undo");
         undoButton.addActionListener(listener);
+        currentPlayer = new JLabel("Current Player: " + model.currentPlayer());
 
         boardPanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
+        sidePanel.setLayout(new GridLayout(2, 1));
 
         for (int r = 0; r < model.numRows(); r++) {
             for (int c = 0; c < model.numColumns(); c++) {
@@ -68,7 +73,10 @@ public class ChessPanel extends JPanel {
         add(boardPanel, BorderLayout.WEST);
         boardPanel.setPreferredSize(new Dimension(600, 600));
         add(buttonPanel);
-        add(undoButton);
+        sidePanel.add(undoButton);
+
+        sidePanel.add(currentPlayer);
+        add(sidePanel, BorderLayout.EAST);
         firstTurnFlag = true;
     }
 
@@ -233,11 +241,16 @@ public class ChessPanel extends JPanel {
                             if (model.isValidMove(m)) {
                                 model.move(m);
                             }
+                            currentPlayer.setText("Current Player: " + model.currentPlayer());
                             // After the 2nd click (move), even if move failed
                             displayBoard(false, 0, 0);
                             if (model.inCheck(model.currentPlayer())) {
                                 JOptionPane.showMessageDialog(null, "You are in check!");
                             }
+                            if (model.isComplete()) {
+                                JOptionPane.showMessageDialog(null, "Game over!");
+                            }
+
                         }
                     }
                 }

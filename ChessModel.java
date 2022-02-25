@@ -53,7 +53,7 @@ public class ChessModel implements IChessModel {
 	 * @return if move is valid
 	 */
 	public boolean isValidMove(Move move) {
-		if (board[move.fromRow][move.fromColumn] != null)
+		if (board[move.fromRow][move.fromColumn] != null && board[move.fromRow][move.fromColumn].player() == player)
 			if (board[move.fromRow][move.fromColumn].isValidMove(move, board))
                 return true;
 		return false;
@@ -203,6 +203,8 @@ public class ChessModel implements IChessModel {
 
 		board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
 		board[move.fromRow][move.fromColumn] = null;
+
+		setNextPlayer();
 	}
 
 	/** check if king is checked */
@@ -307,7 +309,7 @@ public class ChessModel implements IChessModel {
 			((Pawn) board[Integer.parseInt(temp[0])][Integer.parseInt(temp[1])]).setEnPassantVulnerable(!Boolean.parseBoolean(temp[2]));
 		}
 
-		//player.next();
+		setNextPlayer();
 	}
 
 	/** A.I. for black Player side*/
