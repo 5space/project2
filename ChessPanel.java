@@ -231,6 +231,7 @@ public class ChessPanel extends JPanel {
             if (event.getSource() == undoButton) {
                 model.undo();
                 displayBoard(false, 0, 0);
+                currentPlayer.setText("Current Player: " + model.currentPlayer());
             }
 
             for (int r = 0; r < model.numRows(); r++) {
@@ -250,17 +251,16 @@ public class ChessPanel extends JPanel {
                             Move m = new Move(fromRow, fromCol, toRow, toCol);
                             if (model.isValidMove(m)) {
                                 model.move(m);
+                                currentPlayer.setText("Current Player: " + model.currentPlayer());
+                                if (model.inCheck(model.currentPlayer())) {
+                                    JOptionPane.showMessageDialog(null, "You are in check!");
+                                }
+                                if (model.isComplete()) {
+                                    JOptionPane.showMessageDialog(null, "Game over!");
+                                }
                             }
-                            currentPlayer.setText("Current Player: " + model.currentPlayer());
                             // After the 2nd click (move), even if move failed
                             displayBoard(false, 0, 0);
-                            if (model.inCheck(model.currentPlayer())) {
-                                JOptionPane.showMessageDialog(null, "You are in check!");
-                            }
-                            if (model.isComplete()) {
-                                JOptionPane.showMessageDialog(null, "Game over!");
-                            }
-
                         }
                     }
                 }

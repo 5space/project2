@@ -44,8 +44,25 @@ public class ChessModel implements IChessModel {
 
 	/** check if the game is done*/
 	public boolean isComplete() {
-		boolean valid = false;
-		return valid;
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				if (board[r][c] != null) {
+					for (int i = 0; i < 8; i++) {
+						for (int j = 0; j < 8; j++) {
+							if (isValidMove(new Move(r, c, i, j))) {
+								move(new Move(r, c, i, j));
+								if (!inCheck(Player.BLACK) && !inCheck(Player.WHITE)) {
+									undo();
+									return false;
+								}
+								undo();
+							}
+						}
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	/** check if movement on this board is valid
@@ -53,9 +70,19 @@ public class ChessModel implements IChessModel {
 	 * @return if move is valid
 	 */
 	public boolean isValidMove(Move move) {
-		if (board[move.fromRow][move.fromColumn] != null && board[move.fromRow][move.fromColumn].player() == player)
-			if (board[move.fromRow][move.fromColumn].isValidMove(move, board))
-                return true;
+		if (board[move.fromRow][move.fromColumn] != null &&
+				board[move.fromRow][move.fromColumn].player() == player &&
+				board[move.fromRow][move.fromColumn].isValidMove(move, board)) {
+			Player tempPlayer = player;
+			move(move);
+			if (!inCheck(tempPlayer)) {
+				undo();
+				return true;
+			} else {
+				undo();
+				return false;
+			}
+		}
 		return false;
 	}
 
@@ -214,7 +241,7 @@ public class ChessModel implements IChessModel {
 				if (board[r][c] != null && !board[r][c].player().equals(p)) {
 					for (int i = 0; i < 8; i++) {
 						for (int j = 0; j < 8; j++) {
-							if (board[i][j] != null && board[i][j].type().equals("King") &&
+							if (board[i][j] != null && board[i][j].player().equals(p) && board[i][j].type().equals("King") &&
 									board[r][c].isValidMove(new Move(r, c, i, j), board)) {
 								return true;
 							}
@@ -266,6 +293,9 @@ public class ChessModel implements IChessModel {
 	}
 
 	public void undo() {
+		if (moveHistory.size() == 0) {
+			return;
+		}
 		// Get the last moveHistory from the move history
 		ArrayList<Object> lastMoveFull = (ArrayList<Object>) moveHistory.get(moveHistory.size() - 1);
 		moveHistory.remove(moveHistory.size() - 1);
