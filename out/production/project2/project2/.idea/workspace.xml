@@ -5,43 +5,65 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63b9b67c-4f4b-43f8-a17f-7604435db9f2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Bishop.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bishop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChessGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChessGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Bishop.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/ChessGUI.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/ChessModel.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/ChessPanel$listener.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/ChessPanel.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/ChessPiece.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/IChessModel.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/IChessPiece.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/King.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Knight.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Move.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Pawn.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Player.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Queen.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Rook.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChessModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChessModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChessPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChessPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChessPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChessPiece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/King.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/Knight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/Pawn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Queen.java" beforeDir="false" afterPath="$PROJECT_DIR$/Queen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rook.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/project2/project2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/project2/project2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/project2.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="ProjectId" id="25AcvcaTH23jNRCTf0ycN4HNd6X" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
-  <component name="RunManager" selected="Application.ChessGUI">
+  <component name="RunManager" selected="JUnit.ChessTest.Test">
     <configuration name="ChessGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="project2.ChessGUI" />
       <module name="project2" />
@@ -68,8 +90,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ChessTest.Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="project2.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="project2" />
+      <option name="MAIN_CLASS_NAME" value="project2.ChessTest" />
+      <option name="METHOD_NAME" value="Test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ChessTest.Test" />
         <item itemvalue="Application.ChessGUI" />
         <item itemvalue="Application.ChessModel" />
       </list>
@@ -91,7 +130,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
