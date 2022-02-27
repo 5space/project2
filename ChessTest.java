@@ -65,12 +65,4 @@ public class ChessTest {
         Move alternateFirstStrike = new Move(6,0,5,0);
         assertTrue(demo.isValidMove(alternateFirstStrike));
     }
-
-    @Test
-    public void testRook(){
-        ChessModel demoMove = new ChessModel();
-        demoMove.setPiece(6, 2, new Rook(Player.BLACK));
-        Move rookMove = new Move(6,2,2,2);
-        assertTrue(demoMove.isValidMove(rookMove));
-    }
 }
