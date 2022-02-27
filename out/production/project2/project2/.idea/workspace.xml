@@ -5,24 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63b9b67c-4f4b-43f8-a17f-7604435db9f2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Bishop.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/ChessGUI.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/ChessModel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/ChessPanel$listener.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/ChessPanel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/ChessPiece.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/IChessModel.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/IChessPiece.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/King.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Knight.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Move.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Pawn.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Player.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Queen.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/project2/project2/Rook.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChessModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChessModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/project2/project2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/project2/project2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/project2.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,34 +46,8 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
-  <component name="RunManager" selected="JUnit.ChessTest.Test">
-    <configuration name="ChessGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="project2.ChessGUI" />
-      <module name="project2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="project2.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ChessModel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="project2.ChessModel" />
-      <module name="project2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="project2.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ChessTest.Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.ChessTest.testRook">
+    <configuration name="ChessTest.testKingPosition" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project2" />
       <extension name="coverage">
         <pattern>
@@ -100,7 +57,71 @@
       </extension>
       <option name="PACKAGE_NAME" value="project2" />
       <option name="MAIN_CLASS_NAME" value="project2.ChessTest" />
-      <option name="METHOD_NAME" value="Test" />
+      <option name="METHOD_NAME" value="testKingPosition" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ChessTest.testPawn" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="project2.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="project2" />
+      <option name="MAIN_CLASS_NAME" value="project2.ChessTest" />
+      <option name="METHOD_NAME" value="testPawn" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ChessTest.testPawnMovement" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="project2.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="project2" />
+      <option name="MAIN_CLASS_NAME" value="project2.ChessTest" />
+      <option name="METHOD_NAME" value="testPawnMovement" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ChessTest.testQueenPosition" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="project2.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="project2" />
+      <option name="MAIN_CLASS_NAME" value="project2.ChessTest" />
+      <option name="METHOD_NAME" value="testQueenPosition" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ChessTest.testRook" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="project2.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="project2" />
+      <option name="MAIN_CLASS_NAME" value="project2.ChessTest" />
+      <option name="METHOD_NAME" value="testRook" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -108,9 +129,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ChessTest.Test" />
-        <item itemvalue="Application.ChessGUI" />
-        <item itemvalue="Application.ChessModel" />
+        <item itemvalue="JUnit.ChessTest.testRook" />
+        <item itemvalue="JUnit.ChessTest.testPawnMovement" />
+        <item itemvalue="JUnit.ChessTest.testPawn" />
+        <item itemvalue="JUnit.ChessTest.testQueenPosition" />
+        <item itemvalue="JUnit.ChessTest.testKingPosition" />
       </list>
     </recent_temporary>
   </component>

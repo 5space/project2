@@ -54,7 +54,7 @@ public class ChessTest {
             assertEquals(demo.pieceAt(6,i).type(),"Pawn");
         }
         for (int i = 0; i < 8; i++) {
-            assertEquals(demo.pieceAt(1,i).type(),"Pawn"gitq );
+            assertEquals(demo.pieceAt(1,i).type(),"Pawn" );
         }
     }
 
