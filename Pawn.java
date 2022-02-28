@@ -1,18 +1,24 @@
 package project2;
-
+/**
+ * Creates a chess piece called a pawn
+ * with certain moves being valid
+ * based on the chess rules
+ * @author Logan, Chirs, Don
+ * @version 2/28/2022
+ */
 public class Pawn extends ChessPiece {
 	boolean hasMoved;
 	/** how many step the pawn can move */
 	boolean enPassantVulnerable = false;
 
 	/** constructor
-	 * @param player
+	 * @param player is the pawn a player pawn
 	 */
 	public Pawn(Player player) {
 		super(player);
 	}
 
-	/** return the pawn type */
+	/** return the pawn type (black or white)*/
 	public String type() {
 		return "Pawn";
 	}
@@ -51,52 +57,71 @@ public class Pawn extends ChessPiece {
 
 		if (player() == Player.WHITE) {
 			// Normal 1 move forward
-			if (move.fromColumn == move.toColumn && move.fromRow == move.toRow + 1 && board[move.toRow][move.toColumn] == null) {
+			if (move.fromColumn == move.toColumn
+					&& move.fromRow == move.toRow + 1
+					&& board[move.toRow][move.toColumn] == null) {
 				return true;
 			}
 			// If the pawn hasn't moved yet, it can move 2 spaces forward
-			if (!hasMoved && move.fromColumn == move.toColumn && move.fromRow == move.toRow + 2 &&
-					board[move.toRow + 1][move.toColumn] == null && board[move.toRow][move.toColumn] == null) {
+			if (!hasMoved && move.fromColumn == move.toColumn
+					&& move.fromRow == move.toRow + 2 &&
+					board[move.toRow + 1][move.toColumn] == null
+					&& board[move.toRow][move.toColumn] == null) {
 				return true;
 			}
 			// Moving diagonally (normal capture or en passant)
-			if ((move.fromColumn == move.toColumn + 1 || move.fromColumn == move.toColumn - 1) &&
+			if ((move.fromColumn == move.toColumn + 1
+					|| move.fromColumn == move.toColumn - 1) &&
 					move.fromRow == move.toRow + 1) {
 				// Normal piece capture
 				if (board[move.toRow][move.toColumn] != null &&
-						board[move.toRow][move.toColumn].player() == Player.BLACK) {
+						board[move.toRow][move.toColumn].player()
+								== Player.BLACK) {
 					return true;
 				}
 				// En passant
-				else return board[move.toRow + 1][move.toColumn] != null &&
-						board[move.toRow + 1][move.toColumn].type().equals("Pawn") &&
-						board[move.toRow + 1][move.toColumn].player() == Player.BLACK &&
-						((Pawn) board[move.toRow + 1][move.toColumn]).isEnPassantVulnerable();
+				else return board[move.toRow + 1][move.toColumn]
+						!= null &&
+						board[move.toRow + 1]
+								[move.toColumn].type().equals("Pawn") &&
+						board[move.toRow + 1]
+								[move.toColumn].player() == Player.BLACK &&
+						((Pawn) board[move.toRow + 1]
+								[move.toColumn]).isEnPassantVulnerable();
 			}
 		} else {  // player() == Player.BLACK
 			// Normal 1 move forward
-			if (move.fromColumn == move.toColumn && move.fromRow == move.toRow - 1 && board[move.toRow][move.toColumn] == null) {
+			if (move.fromColumn == move.toColumn && move.fromRow
+					== move.toRow - 1
+					&& board[move.toRow][move.toColumn] == null) {
 				return true;
 			}
 			// If the pawn hasn't moved yet, it can move 2 spaces forward
-			if (!hasMoved && move.fromColumn == move.toColumn && move.fromRow == move.toRow - 2 &&
+			if (!hasMoved && move.fromColumn
+					== move.toColumn && move.fromRow == move.toRow - 2 &&
 					board[move.toRow - 1][move.toColumn] == null &&
 					board[move.toRow][move.toColumn] == null) {
 				return true;
 			}
 			// Moving diagonally (normal capture or en passant)
-			if ((move.fromColumn == move.toColumn + 1 || move.fromColumn == move.toColumn - 1) &&
+			if ((move.fromColumn == move.toColumn + 1
+					|| move.fromColumn == move.toColumn - 1) &&
 					move.fromRow == move.toRow - 1) {
 				// Normal piece capture
 				if (board[move.toRow][move.toColumn] != null &&
-						board[move.toRow][move.toColumn].player() == Player.WHITE) {
+						board[move.toRow][move.toColumn].player()
+								== Player.WHITE) {
 					return true;
 				}
 				// En passant
-				else return board[move.toRow - 1][move.toColumn] != null &&
-						board[move.toRow - 1][move.toColumn].type().equals("Pawn") &&
-						board[move.toRow - 1][move.toColumn].player() == Player.WHITE &&
-						((Pawn) board[move.toRow - 1][move.toColumn]).isEnPassantVulnerable();
+				else return board[move.toRow - 1][move.toColumn]
+						!= null &&
+						board[move.toRow - 1]
+								[move.toColumn].type().equals("Pawn") &&
+						board[move.toRow - 1]
+								[move.toColumn].player() == Player.WHITE &&
+						((Pawn) board[move.toRow - 1]
+								[move.toColumn]).isEnPassantVulnerable();
 			}
 		}
 		return false;
