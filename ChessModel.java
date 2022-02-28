@@ -342,6 +342,47 @@ public class ChessModel implements IChessModel {
 		setNextPlayer();
 	}
 
+	//support function for A.I. mechanic
+
+	/** When the Black king is in check the A.I. will attempt to move the king
+	 *
+	 * @return Move
+	 */
+	private Move getOutCheck(){
+		if(inCheck(Player.WHITE)){
+			IChessPiece piece1;
+			IChessPiece piece2;
+			for(int r = 0; r < 8; r++) {
+				for(int c = 0; c < 8; c++) {
+					if(board[r][c]!=null) {
+						if(board[r][c].player() == player.WHITE) {
+							for(int i = 0; i < 8; r++)
+								for(int j = 0; j< 8;j++) {
+									Move move = new Move(r, c, i, j);
+									if(board[r][c].isValidMove(move, board)) {
+										piece1 = board[r][c];
+										setPiece(r, c,null);
+										piece2 = board[r][c];
+										setPiece(i, j, piece2);
+										if(!inCheck(player.WHITE)) {
+											return move;
+										} else {
+											setPiece(r, c, piece1);
+											setPiece(i, j, piece2);
+										}
+									}
+								}
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	/** attack player piece in range */
+
+
 	/** A.I. for black Player side*/
 	public void AI() {
 		/* Write a simple AI set of rules in the following order.

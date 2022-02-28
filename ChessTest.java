@@ -65,4 +65,21 @@ public class ChessTest {
         Move alternateFirstStrike = new Move(6,0,5,0);
         assertTrue(demo.isValidMove(alternateFirstStrike));
     }
+
+    @Test
+    public void testCheckMate(){
+        ChessModel cleanBoard = new ChessModel();
+        // set up a simple scenario where the king is checkmated
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                cleanBoard.setPiece(r,c, null);
+            }
+        }
+        King demoKing = new King(Player.WHITE);
+        Queen demoQueen = new Queen(Player.BLACK);
+        Rook demoRook = new Rook(Player.BLACK);
+        cleanBoard.setPiece(0,0, demoKing );
+        cleanBoard.setPiece(1,1, demoQueen );
+        cleanBoard.setPiece(1,4, demoRook );
+    }
 }
