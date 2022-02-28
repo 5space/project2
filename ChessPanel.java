@@ -252,11 +252,14 @@ public class ChessPanel extends JPanel {
                             if (model.isValidMove(m)) {
                                 model.move(m);
                                 currentPlayer.setText("Current Player: " + model.currentPlayer());
-                                if (model.inCheck(model.currentPlayer())) {
-                                    JOptionPane.showMessageDialog(null, "You are in check!");
-                                }
                                 if (model.isComplete()) {
-                                    JOptionPane.showMessageDialog(null, "Game over!");
+                                    if (model.inCheck(Player.WHITE)) {
+                                        JOptionPane.showMessageDialog(null, "Game over! Black wins!");
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Game over! White wins!");
+                                    }
+                                } else if (model.inCheck(model.currentPlayer())) {
+                                    JOptionPane.showMessageDialog(null, "You are in check!");
                                 }
                             }
                             // After the 2nd click (move), even if move failed
@@ -268,3 +271,4 @@ public class ChessPanel extends JPanel {
         }
     }
 }
+

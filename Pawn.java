@@ -1,55 +1,84 @@
 package project2;
+
 /**
- * Creates a chess piece called a pawn
- * with certain moves being valid
- * based on the chess rules
- * @author Logan, Chirs, Don
- * @version 2/28/2022
+ * A pawn chess piece, which can check if a move is valid based on
+ * the rules of the game.
+ *
+ * @author Logan Nommensen (Cybersecurity),
+ * Christopher Lamus (Computer Engineering), Don Nguyen (Computer Science)
+ *
+ * @version Winter 2022
  */
+
 public class Pawn extends ChessPiece {
+	/** If the Pawn has moved yet */
 	boolean hasMoved;
-	/** how many step the pawn can move */
+
+	/** If the Pawn is currently vulnerable to an en passant */
 	boolean enPassantVulnerable = false;
 
-	/** constructor
-	 * @param player is the pawn a player pawn
+	/******************************************************************
+	 * Constructor for the pawn
+	 * @param player the player that the pawn belongs to
 	 */
 	public Pawn(Player player) {
 		super(player);
 	}
 
-	/** return the pawn type (black or white)*/
+	/******************************************************************
+	 * Returns the type of the piece
+	 *
+	 * @return The piece type ("Pawn")
+	 */
 	public String type() {
 		return "Pawn";
 	}
 
-	/** check if the piece has moved */
+	/******************************************************************
+	 * Check if the piece has moved
+	 *
+	 * @return if the piece has moved
+	 */
 	public boolean hasMoved() {
 		return hasMoved;
 	}
 
-	/** set moved status */
+	/******************************************************************
+	 * Set if the pawn has moved
+	 *
+	 * @param bool if the pawn has moved
+	 */
 	public void setHasMoved(boolean bool) {
 		hasMoved = bool;
 	}
 
-	/** set the enPassant move for chess */
+	/******************************************************************
+	 * Returns if the piece is vulnerable to an en passant
+	 *
+	 * @return if the piece is vulnerable to an en passant
+	 */
 	public boolean isEnPassantVulnerable() {
 		return enPassantVulnerable;
 	}
 
-	/** set en passant at the beginning */
+	/******************************************************************
+	 * Set en passant vulnerability
+	 *
+	 * @param bool if the piece is vulnerable to an en passant
+	 */
 	public void setEnPassantVulnerable(boolean bool) {
 		enPassantVulnerable = bool;
 	}
 
-	@Override
 	/**********************************************************************
-	 *  determines if the move is valid for a pawn piece
+	 * Determines if the move is valid for a Pawn
+	 *
 	 * @param move from the move class
-	 * @param board a chess board
-	 * @return true if the selected pawn move is valid based on chess rules
-	 * */
+	 * @param board the chess board the piece is on
+	 *
+	 * @return if the selected pawn move is valid based on chess rules
+	 */
+	@Override
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 		if (!super.isValidMove(move, board)) {
 			return false;

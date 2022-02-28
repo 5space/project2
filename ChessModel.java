@@ -1,23 +1,35 @@
 package project2;
-/** Main for the chess model
- * creates a chess board and pieces
- * and enables you to play a game against AI
- * @author Logan, Chirs, Don
- * @version 2/28/2022
- */
+
 import java.util.ArrayList;
 
-public class ChessModel implements IChessModel {
-    private IChessPiece[][] board;
-	private Player player;
-	ArrayList<Object> moveHistory;
+/*****************************************************************
+ * Main for the chess mode. Creates a chess board and pieces
+ * and enables you to play a game against AI.
+ *
+ * @author Logan Nommensen (Cybersecurity),
+ * Christopher Lamus (Computer Engineering), Don Nguyen (Computer Science)
+ *
+ * @version Winter 2022
+ *****************************************************************/
 
-	/** constructor for the chess board */
+public class ChessModel implements IChessModel {
+	/** The board of interface chess pieces */
+    final private IChessPiece[][] board;
+
+	/** The player object, holding whose turn it is */
+	private Player player;
+
+	/** List of previous moves for the undo function */
+	private final ArrayList<Object> moveHistory;
+
+	/******************************************************************
+	* Constructor for the chess model
+	*/
 	public ChessModel() {
-		/** chess board size is 8x8 */
+		// chess board size is 8x8 */
 		board = new IChessPiece[8][8];
 
-		/** white player go first (USER)*/
+		// white player go first (USER)*/
 		player = Player.WHITE;
 
         board[7][0] = new Rook(Player.WHITE);
@@ -44,19 +56,23 @@ public class ChessModel implements IChessModel {
 			board[1][i] = new Pawn(Player.BLACK);
 		}
 
-		moveHistory = new ArrayList <Object>();
+		moveHistory = new ArrayList<>();
 	}
 
-	/** check if the game is done
-	 * @return true if game is complete false if not
+	/******************************************************************
+	 * Method to check if the game has completed (checkmate)
+	 *
+	 * @return if game is complete
 	 */
 	public boolean isComplete() {
+		boolean canMove = false;
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
 				if (board[r][c] != null) {
 					for (int i = 0; i < 8; i++) {
 						for (int j = 0; j < 8; j++) {
 							if (isValidMove(new Move(r, c, i, j))) {
+								canMove = true;
 								move(new Move(r, c, i, j));
 								if (!inCheck(Player.BLACK)
 										&& !inCheck(Player.WHITE)) {
@@ -70,11 +86,14 @@ public class ChessModel implements IChessModel {
 				}
 			}
 		}
-		return true;
+		return canMove;
 	}
 
-	/** check if movement on this board is valid
+	/******************************************************************
+	 * Check if movement on this board is valid
+	 *
 	 * @param move from Move class
+	 *
 	 * @return if move is valid
 	 */
 	public boolean isValidMove(Move move) {
@@ -96,16 +115,18 @@ public class ChessModel implements IChessModel {
 		return false;
 	}
 
-	/** store the movement coordination to evaluate and execute
-	 * @param move from the Move class
+	/******************************************************************
+	 * Method to execute a move and the resulting changes to the board
+	 * (en passant, castling, etc.), then add the move to the move history
 	 *
+	 * @param move from the Move class
 	 */
 	public void move(Move move) {
-		ArrayList<Object> tempMoveHistory = new ArrayList <Object>();
+		ArrayList<Object> tempMoveHistory = new ArrayList <>();
 
-		ArrayList<Object> extraPieces = new ArrayList <Object>();
+		ArrayList<Object> extraPieces = new ArrayList <>();
 
-		ArrayList<String> enPassantChanges = new ArrayList <String>();
+		ArrayList<String> enPassantChanges = new ArrayList <>();
 
 		// En Passant reset
 		for (int row = 0; row < numRows(); row++) {
@@ -280,9 +301,12 @@ public class ChessModel implements IChessModel {
 		setNextPlayer();
 	}
 
-	/** check if king is checked
-	 * @param p is player in check
-	 * @return true if in check false if not
+	/******************************************************************
+	 * Check if a player's king is in check
+	 *
+	 * @param p Player's king to check for check
+	 *
+	 * @return if the player's king is in check
 	 */
 	public boolean inCheck(Player p) {
 		for (int r = 0; r < 8; r++) {
@@ -306,45 +330,72 @@ public class ChessModel implements IChessModel {
 		return false;
 	}
 
-	/** return whose turn is */
+	/******************************************************************
+	 * Check current player
+	 *
+	 * @return whose turn it is
+	 */
 	public Player currentPlayer() {
 		return player;
 	}
 
-	/** return number of row*/
+	/******************************************************************
+	 *  Method for checking the number of rows in the board
+	 *
+	 *  @return number of rows
+	 */
 	public int numRows() {
 		return 8;
 	}
 
-	/** return number of column */
+	/******************************************************************
+	 *  Method for checking the number of columns in the board
+	 *
+	 *  @return number of columns
+	 */
 	public int numColumns() {
 		return 8;
 	}
 
-	/** return what piece at location
-	 * @param row
-	 * @param column
+	/******************************************************************
+	 * Return what piece is at a location
+	 *
+	 * @param row Row of the location
+	 * @param column Column of the location
+	 *
+	 * @return piece at location
+	 *
+	 * @throws IllegalArgumentException if the location is invalid
+	 * (row or column out of bounds)
 	 */
 	public IChessPiece pieceAt(int row, int column) {
+		if (row < 0 || row > 7 || column < 0 || column > 7) {
+			throw new IllegalArgumentException("Invalid row or column");
+		}
 		return board[row][column];
 	}
 
-	/** change turn */
+	/******************************************************************
+	 * Method to change turn to the next player
+	 */
 	public void setNextPlayer() {
 		player = player.next();
 	}
 
-	/** create new piece and put it on the board
-	 * @param piece create new piece of chess on demand
+	/******************************************************************
+	 * Put a piece on the board
 	 *
-	 * coordination
-	 * @param column from the chess board
-	 * @param row from the chess board
+	 * @param row row of the location
+	 * @param column column of the location
+	 * @param piece the chess piece to be placed
 	 */
 	public void setPiece(int row, int column, IChessPiece piece) {
 		board[row][column] = piece;
 	}
 
+	/******************************************************************
+	 * Undoes the last move in the move history.
+	 */
 	public void undo() {
 		if (moveHistory.size() == 0) {
 			return;
@@ -408,7 +459,9 @@ public class ChessModel implements IChessModel {
 		setNextPlayer();
 	}
 
-	/** A.I. for black Player side*/
+	/******************************************************************
+	 * Method for generating a "good" move to play for a player
+	 */
 	public void AI() {
 		/* Write a simple AI set of rules in the following order.
 		 * a. Check to see if you are in check.
@@ -433,9 +486,9 @@ public class ChessModel implements IChessModel {
 		model.display();
 
 	}
-	/**
-	 * Crates a text base display for the chess game
-	 * used for testing purposes
+	/******************************************************************
+	 * Creates a text base display for the chess game used for
+	 * testing purposes
 	 */
 	public void display() {
 		for (int i = 0; i < 8; i++) {
