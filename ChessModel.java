@@ -380,8 +380,15 @@ public class ChessModel implements IChessModel {
 		return null;
 	}
 
-	/** attack player piece in range */
+	/** attack player piece in range
+	 *
+	 * * @return Move that takes the pieces
+	 */
+	private Move tryToEat () {
+		IChessPiece piece;
 
+		return null;
+	}
 
 	/** A.I. for black Player side*/
 	public void AI() {

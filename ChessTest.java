@@ -67,19 +67,21 @@ public class ChessTest {
     }
 
     @Test
-    public void testCheckMate(){
+    public void testRookMovement(){
         ChessModel cleanBoard = new ChessModel();
-        // set up a simple scenario where the king is checkmated
+        // set up a clear board for rook to move freely
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                cleanBoard.setPiece(r,c, null);
+                cleanBoard.setPiece(r, c, null);
             }
         }
-        King demoKing = new King(Player.WHITE);
-        Queen demoQueen = new Queen(Player.BLACK);
-        Rook demoRook = new Rook(Player.BLACK);
-        cleanBoard.setPiece(0,0, demoKing );
-        cleanBoard.setPiece(1,1, demoQueen );
-        cleanBoard.setPiece(1,4, demoRook );
+        Rook demoRookWhite = new Rook(Player.WHITE);
+        Rook demoRookBlack = new Rook(Player.BLACK);
+        cleanBoard.setPiece(5,5, demoRookWhite );
+        cleanBoard.setPiece(0,0, demoRookBlack );
+        // valid move
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,0,5)));
+        // invalid move
+        assertFalse(cleanBoard.isValidMove(new Move(0,0,7,7)));
     }
 }
