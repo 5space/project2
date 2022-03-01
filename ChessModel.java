@@ -620,7 +620,6 @@ public class ChessModel implements IChessModel {
 			// it doesn't get stuck in an infinite loop
 			ArrayList<Move> bestMoves = new ArrayList<>();
 			for (ArrayList<Object> move : weightedMoves) {
-				System.out.println(move);
 				if ((int) move.get(0) > bestMoveScore) {
 					bestMoves.clear();
 					bestMoves.add((Move) move.get(1));
@@ -634,7 +633,6 @@ public class ChessModel implements IChessModel {
 
 			// Finally, make the best move!
 			move(bestMoves.get(0));
-			System.out.println("-----------Made move---------- " + bestMoves.get(0));
 		}
 	}
 
