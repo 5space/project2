@@ -463,6 +463,27 @@ public class ChessModel implements IChessModel {
 	 * Method for generating a "good" move to play for a player
 	 */
 	public void AI() {
+		ArrayList<Move> moves = new ArrayList<>();
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				if (board[r][c] != null && board[r][c].player().equals(Player.BLACK)) {
+					for (int i = 0; i < 8; i++) {
+						for (int j = 0; j < 8; j++) {
+							Move testMove = new Move(r, c, i, j);
+							if (isValidMove(testMove)) {
+								moves.add(testMove);
+							}
+						}
+					}
+				}
+			}
+		}
+		if (moves.size() == 0) {
+			System.out.println("No possible moves for AI. Good game.");
+		} else {
+			move(moves.get((int)(Math.random() * moves.size())));
+		}
+
 		/* Write a simple AI set of rules in the following order.
 		 * a. Check to see if you are in check.
 		 * 		i. If so, get out of check by moving the king or placing a piece to block the check

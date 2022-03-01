@@ -12,7 +12,7 @@ public class ChessPanel extends JPanel {
     private ChessModel model;
     private JButton undoButton;
     private JLabel currentPlayer;
-
+    private JCheckBox AItoggle;
 
     /** image of the chess piece */
     private ImageIcon wRook;
@@ -52,9 +52,10 @@ public class ChessPanel extends JPanel {
         undoButton = new JButton("Undo");
         undoButton.addActionListener(listener);
         currentPlayer = new JLabel("Current Player: " + model.currentPlayer());
+        AItoggle = new JCheckBox("AI");
 
         boardPanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
-        sidePanel.setLayout(new GridLayout(2, 1));
+        sidePanel.setLayout(new GridLayout(3, 1));
 
         for (int r = 0; r < model.numRows(); r++) {
             for (int c = 0; c < model.numColumns(); c++) {
@@ -74,8 +75,8 @@ public class ChessPanel extends JPanel {
         boardPanel.setPreferredSize(new Dimension(600, 600));
         add(buttonPanel);
         sidePanel.add(undoButton);
-
         sidePanel.add(currentPlayer);
+        sidePanel.add(AItoggle);
         add(sidePanel, BorderLayout.EAST);
         firstTurnFlag = true;
     }
@@ -251,15 +252,11 @@ public class ChessPanel extends JPanel {
                             Move m = new Move(fromRow, fromCol, toRow, toCol);
                             if (model.isValidMove(m)) {
                                 model.move(m);
-                                currentPlayer.setText("Current Player: " + model.currentPlayer());
-                                if (model.isComplete()) {
-                                    if (model.inCheck(Player.WHITE)) {
-                                        JOptionPane.showMessageDialog(null, "Game over! Black wins!");
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "Game over! White wins!");
-                                    }
-                                } else if (model.inCheck(model.currentPlayer())) {
-                                    JOptionPane.showMessageDialog(null, "You are in check!");
+                                checkEnd();
+                                if (AItoggle.isSelected() && model.currentPlayer() == Player.BLACK) {
+                                    System.out.println("AI is on");
+                                    model.AI();
+                                    checkEnd();
                                 }
                             }
                             // After the 2nd click (move), even if move failed
@@ -269,6 +266,22 @@ public class ChessPanel extends JPanel {
                 }
             }
         }
+    }
+
+    private void checkEnd() {
+        if (model.isComplete()) {
+            if (model.inCheck(Player.WHITE)) {
+                JOptionPane.showMessageDialog(null, "Game over! Black wins!");
+            } else if (model.inCheck(Player.BLACK)) {
+                JOptionPane.showMessageDialog(null, "Game over! White wins!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Game over! Stalemate. It's a draw.");
+            }
+        } else if (model.inCheck(model.currentPlayer())) {
+            JOptionPane.showMessageDialog(null, "You are in check!");
+        }
+        displayBoard(false, 0, 0);
+        currentPlayer.setText("Current Player: " + model.currentPlayer());
     }
 }
 
