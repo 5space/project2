@@ -24,6 +24,7 @@ public class Knight extends ChessPiece {
 		return (
 				Math.abs(move.fromRow - move.toRow) == 2 &&
 				Math.abs(move.fromColumn - move.toColumn) == 1) ||
-				(Math.abs(move.fromRow - move.toRow) == 1 && Math.abs(move.fromColumn - move.toColumn) == 2);
+				(Math.abs(move.fromRow - move.toRow) == 1 &&
+						Math.abs(move.fromColumn - move.toColumn) == 2);
 	}
 }

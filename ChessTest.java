@@ -11,7 +11,7 @@ public class ChessTest {
     /** chess model for testing */
     ChessModel demo = new ChessModel();
 
-    /** Test if the chess pieces are in correct position */
+    /** Test if the Rooks are in correct position */
     @Test
     public void testRookPosition(){
         assertEquals(demo.pieceAt(0,0).type(),"Rook");
@@ -20,6 +20,7 @@ public class ChessTest {
         assertEquals(demo.pieceAt(7,0).type(),"Rook");
     }
 
+    /** Test if the Bishops are in correct position */
     @Test
     public void testBishopPosition(){
         assertEquals(demo.pieceAt(7,5).type(),"Bishop");
@@ -28,6 +29,7 @@ public class ChessTest {
         assertEquals(demo.pieceAt(0,5).type(),"Bishop");
     }
 
+    /** Test if the Knights are in correct position */
     @Test
     public void testKnightPosition(){
         assertEquals(demo.pieceAt(7,1).type(),"Knight");
@@ -36,20 +38,23 @@ public class ChessTest {
         assertEquals(demo.pieceAt(0,6).type(),"Knight");
     }
 
+    /** Test if the Queens are in correct position */
     @Test
     public void testQueenPosition(){
         assertEquals(demo.pieceAt(7,3).type(),"Queen");
         assertEquals(demo.pieceAt(0,3).type(),"Queen");
     }
 
+    /** Test if the Kings are in correct position */
     @Test
     public void testKingPosition(){
         assertEquals(demo.pieceAt(7,4).type(),"King");
         assertEquals(demo.pieceAt(0,4).type(),"King");
     }
 
+    /** Test if the Pawns are in correct position */
     @Test
-    public void testPawn(){
+    public void testPawnPosition(){
         for (int i = 0; i < 8; i++) {
             assertEquals(demo.pieceAt(6,i).type(),"Pawn");
         }
@@ -58,6 +63,7 @@ public class ChessTest {
         }
     }
 
+    /** Test Pawns can move one or two spaces on first move */
     @Test
     public void testPawnMovement(){
         Move firstStrike = new Move(6,0,4,0);
@@ -66,6 +72,7 @@ public class ChessTest {
         assertTrue(demo.isValidMove(alternateFirstStrike));
     }
 
+    /** Tests Rook movement */
     @Test
     public void testRookMovement(){
         ChessModel cleanBoard = new ChessModel();
@@ -88,6 +95,7 @@ public class ChessTest {
         assertFalse(cleanBoard.isValidMove(new Move(5,5,5,7)));
     }
 
+    /** Tests King movement */
     @Test
     public void testKingMovement(){
         ChessModel cleanBoard = new ChessModel();
@@ -113,6 +121,7 @@ public class ChessTest {
         assertFalse(cleanBoard.isValidMove(new Move(5,5,5,3)));
     }
 
+    /** Tests Queen movement */
     @Test
     public void testQueenMovement() {
         ChessModel cleanBoard = new ChessModel();
@@ -136,6 +145,7 @@ public class ChessTest {
         assertFalse(cleanBoard.isValidMove(new Move(5,5,5,7)));
     }
 
+    /** Tests Knight movement */
     @Test
     public void testKnightMovement() {
         ChessModel cleanBoard = new ChessModel();
@@ -156,6 +166,7 @@ public class ChessTest {
         assertFalse(cleanBoard.isValidMove(new Move(5,5,5,5)));
     }
 
+    /** Tests Bishop movement */
     @Test
     public void testBishopMovement() {
         ChessModel cleanBoard = new ChessModel();

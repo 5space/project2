@@ -67,10 +67,10 @@ public class Bishop extends ChessPiece {
 			}
 		}
 
-		/**
+		/*
 		 * If there's no piece in the way
-		 * If it is not player piece on the (toRow,toColumn) -> take down
-		 * If*/
+		 * If it is not player piece on the (toRow,toColumn) -> move
+		 */
 		return true;
 
 	}
