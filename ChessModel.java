@@ -283,7 +283,8 @@ public class ChessModel implements IChessModel {
 			tempMoveHistory.add(null);
 		}
 
-		// 2. Add extra piece movement to tempMoveHistory (null if no extra piece movement)
+		// 2. Add extra piece movement to tempMoveHistory (null if no extra
+		// piece movement)
 		tempMoveHistory.add(extraPieces);
 
 		// 3. Add hasMoved to tempMoveHistory
@@ -528,7 +529,8 @@ public class ChessModel implements IChessModel {
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
 				// If the found piece is the correct player's piece
-				if (board[r][c] != null && (board[r][c].player().equals(currentPlayer()))) {
+				if (board[r][c] != null &&
+						(board[r][c].player().equals(currentPlayer()))) {
 					for (int i = 0; i < 8; i++) {
 						for (int j = 0; j < 8; j++) {
 							Move testMove = new Move(r, c, i, j);
@@ -581,7 +583,8 @@ public class ChessModel implements IChessModel {
 		// Go through every black piece and try every move
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
-				if (board[r][c] != null && board[r][c].player().equals(Player.BLACK)) {
+				if (board[r][c] != null &&
+						board[r][c].player().equals(Player.BLACK)) {
 					for (int i = 0; i < 8; i++) {
 						for (int j = 0; j < 8; j++) {
 							Move testMove = new Move(r, c, i, j);
