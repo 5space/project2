@@ -260,10 +260,10 @@ public class ChessModel implements IChessModel {
                         board[0][7] = null;
                     }
                 }
-            }
-            ((King) board[move.fromRow]
-					[move.fromColumn]).setHasMoved(true);
-			hasMoved = true;
+				((King) board[move.fromRow]
+						[move.fromColumn]).setHasMoved(true);
+				hasMoved = true;
+			}
         } else if (board[move.fromRow]
 				[move.fromColumn].type().equals("Rook")) {
 			((Rook) board[move.fromRow]
