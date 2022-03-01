@@ -13,6 +13,7 @@ public class ChessPanel extends JPanel {
     private JButton undoButton;
     private JLabel currentPlayer;
     private JCheckBox AItoggle;
+    private JLabel thinkingAI;
 
     /** image of the chess piece */
     private ImageIcon wRook;
@@ -53,9 +54,10 @@ public class ChessPanel extends JPanel {
         undoButton.addActionListener(listener);
         currentPlayer = new JLabel("Current Player: " + model.currentPlayer());
         AItoggle = new JCheckBox("AI");
+        thinkingAI = new JLabel("");
 
         boardPanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
-        sidePanel.setLayout(new GridLayout(3, 1));
+        sidePanel.setLayout(new GridLayout(4, 1));
 
         for (int r = 0; r < model.numRows(); r++) {
             for (int c = 0; c < model.numColumns(); c++) {
@@ -77,6 +79,7 @@ public class ChessPanel extends JPanel {
         sidePanel.add(undoButton);
         sidePanel.add(currentPlayer);
         sidePanel.add(AItoggle);
+        sidePanel.add(thinkingAI);
         add(sidePanel, BorderLayout.EAST);
         firstTurnFlag = true;
     }
@@ -254,9 +257,10 @@ public class ChessPanel extends JPanel {
                                 model.move(m);
                                 checkEnd();
                                 if (AItoggle.isSelected() && model.currentPlayer() == Player.BLACK) {
-                                    System.out.println("AI is on");
+                                    thinkingAI.setText("Thinking...");
                                     model.AI();
                                     checkEnd();
+                                    thinkingAI.setText("");
                                 }
                             }
                             // After the 2nd click (move), even if move failed

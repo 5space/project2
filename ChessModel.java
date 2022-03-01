@@ -460,10 +460,137 @@ public class ChessModel implements IChessModel {
 	}
 
 	/******************************************************************
+	 * Helper method for getting a piece's value for AI purposes
+	 *
+	 * @return value of the piece
+	 */
+	private int getPieceValue(IChessPiece piece) {
+		if (piece == null) {
+			return 0;
+		}
+		switch (piece.type()) {
+			case "Pawn":
+				return 1;
+			case "Rook":
+				return 5;
+			case "Knight":
+				return 3;
+			case "Bishop":
+				return 3;
+			case "Queen":
+				return 9;
+			case "King":
+				return 100;
+			default:
+				return 0;
+		}
+	}
+
+	/******************************************************************
+	 * Helper method for the AI to find the value of the board
+	 *
+	 * @return the value of the current board
+	 */
+	private int evaluateBoard() {
+		int score = 0;
+		if (isComplete()) {
+			return 99999999;
+		}
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				if (board[r][c] != null) {
+					if (board[r][c].player().equals(Player.BLACK)) {
+						score += getPieceValue(board[r][c]);
+					} else {
+						score -= getPieceValue(board[r][c]);
+					}
+				}
+			}
+		}
+		return score;
+	}
+
+	/******************************************************************
+	 * Helper method for the AI to find the value of a move.
+	 * The method recursively checks how good/bad a move is for black
+	 * if white makes their best possible move.
+	 *
+	 * @param depth the current depth of the search
+	 * @param move the move to be evaluated
+	 * @param maxing if the algorithm should be maximizing (playing as black)
+	 *
+	 * @return the value of the move
+	 */
+	private int minimax(int depth, Move move, boolean maxing) {
+		// If depth reaches 0, return the value of the board
+		if (depth == 0) {
+			return evaluateBoard();
+		}
+		// Make a list for the values of all possible moves
+		ArrayList<Integer> moveValues = new ArrayList<>();
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				// If the found piece is the correct player's piece
+				if (board[r][c] != null && (board[r][c].player().equals(currentPlayer()))) {
+					for (int i = 0; i < 8; i++) {
+						for (int j = 0; j < 8; j++) {
+							Move testMove = new Move(r, c, i, j);
+							if (isValidMove(testMove)) {
+								ArrayList<Object> tempMove = new ArrayList<>();
+								move(testMove);
+								// If you can checkmate, should be a super high value
+								if (isComplete()) {
+									undo();
+									if (maxing)
+										return 99999999;
+									else
+										return -99999999;
+								}
+								// Call itself recursively to find a final value
+								moveValues.add(minimax(depth - 1, testMove, !maxing));
+								// Clean up
+								undo();
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// After finding all values for a set of moves, find best for who's maxing
+		if (moveValues.size() == 0) {
+			System.out.println("Can't do anything? " + move);
+			return 0;
+		} else {
+			int bestValue;
+			// If maxing, find the highest value (best for black)
+			if (maxing) {
+				bestValue = -1000;
+				for (int value : moveValues) {
+					if (value > bestValue) {
+						bestValue = value;
+					}
+				}
+			} else { // Minimizing, so find the lowest value (best for white)
+				bestValue = 1000;
+					for (int value : moveValues) {
+						if (value < bestValue) {
+							bestValue = value;
+						}
+					}
+				}
+			return bestValue;
+		}
+	}
+
+	/******************************************************************
 	 * Method for generating a "good" move to play for a player
 	 */
 	public void AI() {
-		ArrayList<Move> moves = new ArrayList<>();
+		// Make a list for all the possible moves
+		ArrayList<ArrayList<Object>> weightedMoves = new ArrayList<>();
+
+		// Go through every black piece and try every move
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
 				if (board[r][c] != null && board[r][c].player().equals(Player.BLACK)) {
@@ -471,36 +598,54 @@ public class ChessModel implements IChessModel {
 						for (int j = 0; j < 8; j++) {
 							Move testMove = new Move(r, c, i, j);
 							if (isValidMove(testMove)) {
-								moves.add(testMove);
+								// Helper list for a move and its value
+								ArrayList<Object> tempMove = new ArrayList<>();
+
+								// Actual try the move
+								move(testMove);
+
+								// If it checkmates then great! Stop there
+								if (isComplete()) {
+									return;
+								}
+
+								// Run a minimax algorithm to check how good that
+								// move is, then add the move to the helper array
+								tempMove.add(minimax(2, testMove, true));
+
+								// Undo the move so we can loop again safely
+								undo();
+
+								// Add the test move's value, then add the helper
+								tempMove.add(testMove);
+								weightedMoves.add(tempMove);
 							}
 						}
 					}
 				}
 			}
 		}
-		if (moves.size() == 0) {
+
+		// After all moves have been assigned a value, if there's no possible
+		// moves the game is over.
+		if (weightedMoves.size() == 0) {
 			System.out.println("No possible moves for AI. Good game.");
 		} else {
-			move(moves.get((int)(Math.random() * moves.size())));
-		}
+			// Finds the best (least bad?) move the AI can make
+			int bestMoveScore = -999;
+			Move bestMove = null;
+			for (ArrayList<Object> move : weightedMoves) {
+				System.out.println(move);
+				if ((int) move.get(0) > bestMoveScore) {
+					bestMove = (Move) move.get(1);
+					bestMoveScore = (int) move.get(0);
+				}
+			}
 
-		/* Write a simple AI set of rules in the following order.
-		 * a. Check to see if you are in check.
-		 * 		i. If so, get out of check by moving the king or placing a piece to block the check
-		 *
-		 * b. Attempt to put opponent into check (or checkmate).
-		 * 		i. Attempt to put opponent into check without losing your piece
-		 *		ii. Perhaps you have won the game.
-		 *
-		 * c. Determine if any of your pieces are in danger,
-		 *		i. Move them if you can.
-		 *		ii. Attempt to protect that piece.
-		 *
-		 * d. Move a piece (pawns first) forward toward opponent king
-		 *		i. check to see if that piece is in danger of being removed, if so, move a different piece.
-		 */
-
+			// Finally, make the best move!
+			move(bestMove);
 		}
+	}
 
 	public static void main(String[] args) {
 		ChessModel model = new ChessModel();
