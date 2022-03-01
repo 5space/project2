@@ -77,15 +77,109 @@ public class ChessTest {
         }
         Rook demoRookWhite = new Rook(Player.WHITE);
         Rook demoRookBlack = new Rook(Player.BLACK);
-        cleanBoard.setPiece(5,5, demoRookWhite );
-        cleanBoard.setPiece(0,0, demoRookBlack );
+        cleanBoard.setPiece(5,5, demoRookWhite);
+        cleanBoard.setPiece(0,0, demoRookBlack);
         // valid move
         assertTrue(cleanBoard.isValidMove(new Move(5,5,0,5)));
         // invalid move
         assertFalse(cleanBoard.isValidMove(new Move(0,0,7,7)));
+        Pawn demoPawnWhite = new Pawn(Player.WHITE);
+        cleanBoard.setPiece(5,6, demoPawnWhite);
+        assertFalse(cleanBoard.isValidMove(new Move(5,5,5,7)));
     }
 
     @Test
-    public 
+    public void testKingMovement(){
+        ChessModel cleanBoard = new ChessModel();
+        // set up a clear board for king to move freely
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                cleanBoard.setPiece(r, c, null);
+            }
+        }
+        King demoKingWhite = new King(Player.WHITE);
+        cleanBoard.setPiece(5,5, demoKingWhite);
+        // valid moves
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,6,5)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,4,5)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,6,6)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,4,6)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,5,6)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,5,4)));
 
+        // invalid moves
+        assertFalse(cleanBoard.isValidMove(new Move(0,0,7,7)));
+        assertFalse(cleanBoard.isValidMove(new Move(5,5,5,7)));
+        assertFalse(cleanBoard.isValidMove(new Move(5,5,5,3)));
+    }
+
+    @Test
+    public void testQueenMovement() {
+        ChessModel cleanBoard = new ChessModel();
+        // set up a clear board for queen to move freely
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                cleanBoard.setPiece(r, c, null);
+            }
+        }
+        Queen demoQueenWhite = new Queen(Player.WHITE);
+        cleanBoard.setPiece(5,5, demoQueenWhite);
+        // valid moves
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,0,5)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,5,0)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,0,0)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,7,7)));
+
+        // invalid moves
+        Pawn demoPawnWhite = new Pawn(Player.WHITE);
+        cleanBoard.setPiece(5,6, demoPawnWhite);
+        assertFalse(cleanBoard.isValidMove(new Move(5,5,5,7)));
+    }
+
+    @Test
+    public void testKnightMovement() {
+        ChessModel cleanBoard = new ChessModel();
+        // set up a clear board for knight to move freely
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                cleanBoard.setPiece(r, c, null);
+            }
+        }
+        Knight demoKingWhite = new Knight(Player.WHITE);
+        cleanBoard.setPiece(5,5, demoKingWhite);
+        // valid moves
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,6,7)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,7,6)));
+
+        // invalid moves
+        assertFalse(cleanBoard.isValidMove(new Move(5,5,0,0)));
+        assertFalse(cleanBoard.isValidMove(new Move(5,5,5,5)));
+    }
+
+    @Test
+    public void testBishopMovement() {
+        ChessModel cleanBoard = new ChessModel();
+        // set up a clear board for bishop to move freely
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                cleanBoard.setPiece(r, c, null);
+            }
+        }
+        Bishop demoBishopWhite = new Bishop(Player.WHITE);
+        cleanBoard.setPiece(5,5, demoBishopWhite);
+        // valid moves
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,0,0)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,7,7)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,6,6)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,6,4)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,4,6)));
+        assertTrue(cleanBoard.isValidMove(new Move(5,5,4,4)));
+
+        // invalid moves
+        assertFalse(cleanBoard.isValidMove(new Move(5,5,0,7)));
+        assertFalse(cleanBoard.isValidMove(new Move(5,5,5,5)));
+        Pawn demoPawnWhite = new Pawn(Player.WHITE);
+        cleanBoard.setPiece(6,6, demoPawnWhite);
+        assertFalse(cleanBoard.isValidMove(new Move(5,5,7,7)));
+    }
 }
