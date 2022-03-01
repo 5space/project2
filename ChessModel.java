@@ -1,6 +1,7 @@
 package project2;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /*****************************************************************
  * Main for the chess mode. Creates a chess board and pieces
@@ -493,9 +494,6 @@ public class ChessModel implements IChessModel {
 	 */
 	private int evaluateBoard() {
 		int score = 0;
-		if (isComplete()) {
-			return 99999999;
-		}
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
 				if (board[r][c] != null) {
@@ -516,12 +514,11 @@ public class ChessModel implements IChessModel {
 	 * if white makes their best possible move.
 	 *
 	 * @param depth the current depth of the search
-	 * @param move the move to be evaluated
 	 * @param maxing if the algorithm should be maximizing (playing as black)
 	 *
 	 * @return the value of the move
 	 */
-	private int minimax(int depth, Move move, boolean maxing) {
+	private int minimax(int depth, boolean maxing) {
 		// If depth reaches 0, return the value of the board
 		if (depth == 0) {
 			return evaluateBoard();
@@ -536,19 +533,11 @@ public class ChessModel implements IChessModel {
 						for (int j = 0; j < 8; j++) {
 							Move testMove = new Move(r, c, i, j);
 							if (isValidMove(testMove)) {
-								ArrayList<Object> tempMove = new ArrayList<>();
 								move(testMove);
-								// If you can checkmate, should be a super high value
-								if (isComplete()) {
-									undo();
-									if (maxing)
-										return 99999999;
-									else
-										return -99999999;
-								}
+
 								// Call itself recursively to find a final value
-								moveValues.add(minimax(depth - 1, testMove, !maxing));
-								// Clean up
+								moveValues.add(minimax(depth - 1, !maxing));
+
 								undo();
 							}
 						}
@@ -559,8 +548,7 @@ public class ChessModel implements IChessModel {
 
 		// After finding all values for a set of moves, find best for who's maxing
 		if (moveValues.size() == 0) {
-			System.out.println("Can't do anything? " + move);
-			return 0;
+			return -99999999;
 		} else {
 			int bestValue;
 			// If maxing, find the highest value (best for black)
@@ -604,14 +592,9 @@ public class ChessModel implements IChessModel {
 								// Actual try the move
 								move(testMove);
 
-								// If it checkmates then great! Stop there
-								if (isComplete()) {
-									return;
-								}
-
 								// Run a minimax algorithm to check how good that
 								// move is, then add the move to the helper array
-								tempMove.add(minimax(2, testMove, true));
+								tempMove.add(minimax(2, true));
 
 								// Undo the move so we can loop again safely
 								undo();
@@ -633,17 +616,25 @@ public class ChessModel implements IChessModel {
 		} else {
 			// Finds the best (least bad?) move the AI can make
 			int bestMoveScore = -999;
-			Move bestMove = null;
+			// Makes a list for the best moves with the same weight, so
+			// it doesn't get stuck in an infinite loop
+			ArrayList<Move> bestMoves = new ArrayList<>();
 			for (ArrayList<Object> move : weightedMoves) {
 				System.out.println(move);
 				if ((int) move.get(0) > bestMoveScore) {
-					bestMove = (Move) move.get(1);
+					bestMoves.clear();
+					bestMoves.add((Move) move.get(1));
 					bestMoveScore = (int) move.get(0);
+				} else if ((int) move.get(0) == bestMoveScore) {
+					bestMoves.add((Move) move.get(1));
 				}
-			}
+ 			}
+			// Shuffles the list of best moves
+			Collections.shuffle(bestMoves);
 
 			// Finally, make the best move!
-			move(bestMove);
+			move(bestMoves.get(0));
+			System.out.println("-----------Made move---------- " + bestMoves.get(0));
 		}
 	}
 
