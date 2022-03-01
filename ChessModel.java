@@ -87,7 +87,7 @@ public class ChessModel implements IChessModel {
 				}
 			}
 		}
-		return canMove;
+		return !canMove;
 	}
 
 	/******************************************************************
@@ -599,9 +599,12 @@ public class ChessModel implements IChessModel {
 								// Actual try the move
 								move(testMove);
 
+								if (isComplete()) {
+									return;
+								}
 								// Run a minimax algorithm to check how good that
 								// move is, then add the move to the helper array
-								tempMove.add(minimax(2, true));
+								tempMove.add(minimax(2, false));
 
 								// Undo the move so we can loop again safely
 								undo();

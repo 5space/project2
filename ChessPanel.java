@@ -52,7 +52,7 @@ public class ChessPanel extends JPanel {
         undoButton = new JButton("Undo");
         undoButton.addActionListener(listener);
         currentPlayer = new JLabel("Current Player: " + model.currentPlayer());
-        AItoggle = new JCheckBox("AI");
+        AItoggle = new JCheckBox("AI", true);
 
         boardPanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
         sidePanel.setLayout(new GridLayout(4, 1));
