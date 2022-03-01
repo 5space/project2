@@ -61,7 +61,7 @@ public class ChessModel implements IChessModel {
 	}
 
 	/******************************************************************
-	 * Method to check if the game has completed (checkmate)
+	 * Method to check if the game has completed (checkmate or stalemate)
 	 *
 	 * @return if game is complete
 	 */
@@ -574,7 +574,11 @@ public class ChessModel implements IChessModel {
 	}
 
 	/******************************************************************
-	 * Method for generating a "good" move to play for a player
+	 * Method for generating a "good" move to play for the black player.
+	 * Uses a minimax algorithm to find the best move, meaning it will
+	 * find all possible moves, then all possible response moves for white,
+	 * then repeat for the depth specified then find the move that white has
+	 * the worst "best" response to.
 	 */
 	public void AI() {
 		// Make a list for all the possible moves
